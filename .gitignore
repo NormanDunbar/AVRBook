@@ -1,0 +1,21 @@
+*.aux
+*.bcf
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lol
+*.lot
+*.pdf
+*.ptc
+*.run.xml
+*.toc
+
+!Readme.pdf
+// Commented out for now.
+//!AVRBook.pdf
+//
+!Pictures/*
+!Content/images/*
+!Content/*.pdf

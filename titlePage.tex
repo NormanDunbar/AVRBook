@@ -1,0 +1,24 @@
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%
+% A bit of a pain but we need to duplicate, perhaps, the config information found in the
+% the file PDFConfig.tex here too.
+%----------------------------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay]
+\coordinate [below=3.5cm] (midpoint) at (current page.north);
+\node at (current page.north west)
+{\begin{tikzpicture}[remember picture,overlay]
+\fill[ocre!20](0cm,0cm) rectangle (\paperwidth,-\paperheight); % NDunbar
+\node[anchor=north west,inner sep=0pt] at (0,0) {\includegraphics[width=\paperwidth]{CoverImage.jpg}}; % Background image
+\draw[anchor=north] (midpoint) node [fill=white!30!white,fill opacity=0.8,text opacity=1,inner sep=1cm]{\Huge\centering\bfseries\sffamily\parbox[c][][t]{\paperwidth}
+%
+{\centering\huge From Arduino to AVR in C\\[35pt] % Book title
+{\Large Migrating from Arduino to AVR Made Easy}\\[20pt] % Subtitle
+{\huge Norman Dunbar}}}; % Author name
+%
+\end{tikzpicture}};
+\end{tikzpicture}
+\vfill
+\endgroup
