@@ -51,12 +51,12 @@
 %----------------------------------------------------------------------------------------
 % Standard colour for the whole book.
 % NDunbar: It is possible to redefine ocre as some other colour, but it seems that there
-% are places where text remains in the original Oracnge colour, rather than changing.
+% are places where text remains in the original Orange colour, rather than changing.
 % For example, the TOC, the List of xxxx, Part pages where a mini-TOC is and page 
 % numbers in the index. Everything else is fine.
 %----------------------------------------------------------------------------------------
-%\definecolor{ocre}{RGB}{243,102,25} % Define the orange color used for highlighting throughout the book
-\definecolor{ocre}{named}{wwwDarkMagenta}
+\definecolor{ocre}{RGB}{243,102,25} % Define the orange color used for highlighting throughout the book
+%\definecolor{ocre}{named}{wwwDarkMagenta}
 
 
 
@@ -151,17 +151,23 @@
 {}
 {}
 
-% Chapter text styling
+% Chapter text styling in the main TOC.
 \titlecontents{chapter}[1.25cm] % Indentation
 {\addvspace{12pt}\large\sffamily\bfseries} % Spacing and font options for chapters
-{\color{ocre!60}\contentslabel[\Large\thecontentslabel]{1.25cm}\color{ocre}} % Chapter number
-{\color{ocre}}  
-{\color{ocre!60}\normalsize\;\titlerule*[.5pc]{.}\;\thecontentspage} % Page number
+% The Chapter Number at the start of the line.
+%{\color{ocre!60}\contentslabel[\Large\thecontentslabel]{1.25cm}\color{ocre}} 
+{\color{ocre!60}\contentslabel[\Large\thecontentslabel]{1.25cm}} % NDunbar
+%{\color{ocre}}  
+{} % NDunbar
+% The dots and the page number at the end of the line.
+{\color{ocre!60}\normalsize\;\titlerule*[.5pc]{.}\;\thecontentspage}
 
-% Section text styling
+% Section text styling in the main TOC.
 \titlecontents{section}[1.25cm] % Indentation
 {\addvspace{3pt}\sffamily\bfseries} % Spacing and font options for sections
-{\contentslabel[\thecontentslabel]{1.25cm}} % Section number
+% The section number at the start of the line.
+%{\contentslabel[\color{black}\thecontentslabel]{1.25cm}} % Section number
+{\contentslabel[\color{black}\thecontentslabel]{1.25cm}} % NDunbar
 {}
 {\hfill\color{black}\thecontentspage} % Page number
 []

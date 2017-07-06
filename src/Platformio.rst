@@ -15,14 +15,14 @@ You can use it to replace the Arduino IDE too, if you wish, as it understands pl
 PlatformIO comes in two main flavours:
 
 -   The command line version\ [2]_
--   An IDE version for the Atom editor\ [3]_, or Visual Studio. This also allows you to run the command line commands without having to install that package separately.
+-   An IDE version for the Atom editor, or Visual Studio. This also allows you to run the command line commands without having to install that package separately.
 
 In addition, there's a lot of documentation on the web site about how you can install the PlatformIO tools into a large number of different IDEs, some of which you may already be using.
 
 Installing Atom
 ---------------
 
-???????????????????????????????????????????????
+**To Be COMPLETED**
 
 Installing PlatformIO in Atom
 -----------------------------
@@ -59,7 +59,11 @@ You will hopefully notice that when you have selected a board, you get to select
 
 For now, however, let's stick with a single board.
 
-Now select a directory to save the code in. My choice is ``/home/norman/SourceCode/PlatformIO/Blink`` - you might want to choose something different, especially if you are on Windows!
+Now select a directory to save the code in. My choice is:
+
+    ``/home/norman/SourceCode/PlatformIO/Blink``
+    
+you might want to choose something different, especially if you are on Windows!
 
 Click the 'Process' button.
 
@@ -129,8 +133,8 @@ You will see something like the following:
 
 ..  code-block:: none
 
-    [Wed Jul  5 15:30:05 2017] Processing nanoatmega328 (platform: atmelavr; board: nanoatmega328; framework: arduino)
-    --------------------------------------------------------------------------------
+    Processing nanoatmega328 ...
+    ------------------------------
     Verbose mode can be enabled via `-v, --verbose` option
     Collected 27 compatible libraries
     Looking for dependencies...
@@ -162,7 +166,7 @@ It appears we have a slight problem, we have redefined F_CPU. PlatformIO knows t
 We can either:
 
 -   delete the offending line of code in our ``blink.c`` file, or;
--   Wrap the code and define it if it isn't already defined:
+-   Wrap the code in sentinels, and only define it if it isn't already defined:
 
     ..  code-block:: c
     
@@ -195,7 +199,7 @@ This is telling you that the entire blink program takes up *only* 178 bytes of F
 
     Sketch uses 928 bytes (3%) of program storage space. Maximum is 30720 bytes.
 
-    Global variables use 9 bytes (0%) of dynamic memory, leaving 2039 bytes for local variables. Maximum is 2048 bytes.
+    Global variables use 9 bytes (0%) of dynamic memory, leaving 2039 bytes ...
 
 We have a huge saving in such a tiny program. Just out of interest, I compiled the BAreMinimum Arduino example, which looks like this:
 
@@ -215,9 +219,9 @@ And the compiler told me that:
 
     Sketch uses 444 bytes (1%) of program storage space. Maximum is 30720 bytes.
 
-    Global variables use 9 bytes (0%) of dynamic memory, leaving 2039 bytes for local variables. Maximum is 2048 bytes.
+    Global variables use 9 bytes (0%) of dynamic memory, leaving 2039 ...
 
-So, our blink code, written in AVR C with none of the Arduino wrappings, takes up only 40% of the space used in Flash Memory by a completely empty\ [5]_ Arduino sketch!
+So, our blink code, written in AVR C with none of the Arduino wrappings, takes up only 40% of the space used in Flash Memory by a completely empty\ [3]_ Arduino sketch!
 
 Upload to Our Board
 -------------------
@@ -235,7 +239,7 @@ You might see the following, on Linux:
     Warning! Please install `99-platformio-udev.rules` and check that your board's PID and VID are listed in the rules.
     https://raw.githubusercontent.com/platformio/platformio/develop/scripts/99-platformio-udev.rules
 
-This is required to allow non-root users on a Linux system, the ability to upload using t he USB ports. 
+This is required to allow non-root users on a Linux system, the ability to upload using the USB ports. 
 
 Install the Rules File
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -246,27 +250,28 @@ Download and install the rules file as follows:
 
     cd /tmp
     
-    sudo wget https://raw.githubusercontent.com/platformio/platformio/develop/scripts/99-platformio-udev.rules
+    # The following is all on ONE LINE!
+    sudo wget https://raw.githubusercontent.com/platformio/platformio/
+    develop/scripts/99-platformio-udev.rules
     
     sudo cp 99-platformio-udev.rules /etc/udev/rules.d/99-platformio-udev.rules
     
     sudo service udev restart
-    
     cd -
-
+    
 or, if that fails:
 
 ..  code-block:: bash
 
     sudo udevadm control --reload-rules
     sudo udevadm trigger
+    cd -
     
+Don't Forget Your Port
 
 
 ..  FOOTNOTES -------------------------------------------
 
 ..  [1] Panic not Windows users, the command line is not your mortal enemy. In fact, you can get stuff done a lot quicker in the command line, *most* of the time. Once you get to know it of course.
 ..  [2] See previous footnote!
-..  [3] I've had extreme difficulty running 64 bit Atom 1.18 on a Centos 7 Linux desktop. I simply get the Welcome screen but only a black background, no text etc. This happens on Gnome 3 and Mate desktops, so I've uninstalled\ [4]_ it and I'll stick with the command line version for now.
-..  [4] Ok, because I'm running Centos in a VirtualBox VM, the Atom problem is caused by having '3D Acceleration' enabled in the VM's settings. By turning that off, Atom works again!
-..  [5] More on the reasons why elsewhere.
+..  [3] More on the reasons why elsewhere.

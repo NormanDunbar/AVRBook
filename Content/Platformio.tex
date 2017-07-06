@@ -1,0 +1,403 @@
+\chapter{Installing PlatformIO}\label{installing-platformio}
+
+\section{PlatformIO}\label{platformio}\index{PlatformIO}
+
+\href{http://platformio.org/}{PlatformIO} is a command line\footnote{Panic
+  not Windows users, the command line is not your mortal enemy. In fact,
+  you can get stuff done a lot quicker in the command line, \emph{most}
+  of the time. Once you get to know it of course.} and IDE based utility
+that allows you to write plain C or C++ code to upload to your Arduino,
+or, almost any other embedded microcontroller that is known to man,
+woman or hamster! At the time of writing, 5th July 2017, PlatformIO
+supported:
+
+\begin{itemize}
+\tightlist
+\item
+  23 Development Platforms
+\item
+  13 Frameworks
+\item
+  412 Embedded Boards
+\item
+  61 Project Examples
+\item
+  1,738 Libraries
+\item
+  8,084 Library Examples
+\end{itemize}
+
+You can use it to replace the Arduino IDE too, if you wish, as it
+understands plain Arduino code as well as AVR C code. Arduino sketches
+can be imported unchanged, worked on, compiled and uploaded without any
+difficulty.
+
+PlatformIO comes in two main flavours:
+
+\begin{itemize}
+\tightlist
+\item
+  The command line version\footnote{See previous footnote!}
+\item
+  An IDE version for the Atom editor, or Visual Studio. This also allows
+  you to run the command line commands without having to install that
+  package separately.
+\end{itemize}
+
+In addition, there's a lot of documentation on the web site about how
+you can install the PlatformIO tools into a large number of different
+IDEs, some of which you may already be using.
+
+\subsection{Installing Atom}\label{installing-atom}
+
+As a lot of Windows people \emph{might} not be fully acquainted with the command
+line, I've decided to base the remainder of this book on using the Atom editor
+from Github, and the PlatformIO package for it. 
+
+\textbf{To Be COMPLETED}
+
+\subsection{Installing PlatformIO in
+Atom}\label{installing-platformio-in-atom}
+
+We will install the following 2 PlatformIO packages for Atom:
+
+\begin{itemize}
+\tightlist
+\item
+  platformio-ide (version 2.0.0 beta 7 is the latest at the time of
+  writing)
+\item
+  platformio-ide-debugger (version 1.2.3 is the latest at the time of
+  writing)
+\end{itemize}
+
+Open Atom and select the \lstinline!edit -> Preferences! menu option.
+When the `Settings' tab appears, look down to find the option labelled
+`+ Install' and choose it.
+
+Search for `platformio' and a list of available options will soon be
+displayed. Find the two packages mentioned above and click the `install'
+button. Wait \ldots{}.
+
+Eventually you will be prompted to restart Atom, so do so.
+
+If, on the restart, you are prompted to Install Clang go ahead and do
+so, if you wish, or select \lstinline!Disable Code Completion!. Clang
+will have to be installed using your package manager - it's not a
+package for Atom but for the entire system. Full details are
+\href{http://docs.platformio.org/en/latest/ide/atom.html\#ii-clang-for-intelligent-code-completion}{here}.
+
+Full instructions on installing Atom and PlatformIO packages can be
+found
+\href{http://docs.platformio.org/en/latest/ide/atom.html\#clang-for-intelligent-code-completion}{here}.
+
+You will know that you have installed PlatformIO when you restart Atom
+and see a `bug face' looking back at you from the PlatformIO welcome
+screen.
+
+\section{PlatformIO Quick Start}\label{platformio-quick-start}
+
+\subsection{Create the Blink Project}\label{create-the-blink-project}
+
+Open the Atom editor, if not already running, and make sure that you can
+see the PlatformIO Welcome Screen. Click on `+ New Project' to start the
+New Project Wizard.
+
+You must first select a board. As I'm using an Arduino Nano, for this
+example, that's what I'll be selecting. You may choose something
+different.
+
+You will hopefully notice that when you have selected a board, you get
+to select another, and another \ldots{}. this is a feature of PlatformIO
+in that it allows you to use the same source code for multiple boards
+and/or microcontrollers. Nice. I sometimes build for the Nano, the Uno,
+the Duemilenova and for the stand-alone AtTiny85.
+
+For now, however, let's stick with a single board.
+
+Now select a directory to save the code in. My choice is:
+
+\begin{quote}
+\lstinline!/home/norman/SourceCode/PlatformIO/Blink!
+\end{quote}
+
+you might want to choose something different, especially if you are on
+Windows!
+
+Click the `Process' button.
+
+The first time PlatformIO is used, it needs to connect to the internet
+to install the appropriate tools for the board you have chosen. In the
+case of the Nano, this is `platform: atmelavr'. Just wait \ldots{}.
+
+When the processing has completed, the output directory that you chose
+above will be populated by a number of files and directories:
+
+\begin{itemize}
+\tightlist
+\item
+  A directory named \lstinline!lib! and a file, \lstinline!readme.txt! within.
+  The readme file has all the information you will need if you intend to
+  write some libraries for this particular project. The source code for
+  the libraries should be kept in this directory.
+\item
+  A directory named \lstinline!src!. This is where you will create your own
+  project's source code.
+\item
+  A file named \lstinline!.gitignore!. This (hidden on Linux) file tells git, if in use for
+  version control, to ignore a number of files that are not required in
+  normal circumstances, usually files that can be recreated at will.
+\item
+  A file named \lstinline!.travis.yml!. This (hidden on Linux) file is a YAML source file that
+  tells the Travis `Continuous Integration' system what to do whenever
+  something in the project changes. We will not be using this feature.
+\item
+  A file named \lstinline!platformio.ini!. This file tells PlatformIO how the
+  project will be built and uploaded to the microcontroller, for each
+  board you selected when creating the project.
+\end{itemize}
+
+\subsection{Write the Blink Code}\label{write-the-blink-code}
+
+Now we have our project (Blink) created, we need to write some code, so:
+
+\begin{itemize}
+\tightlist
+\item
+  Right-click the `src' folder in the `Project' tab, and select
+  \lstinline!New File! from the context menu that appears.
+\item
+  Enter the file name when prompted, I chose `blink.c', but you can name
+  the file as you wish.
+\end{itemize}
+
+The new file opens in the editor, so add the following code:
+
+\begin{lstlisting}[language=C,caption={AVRBlink.c}]
+// Define the CPU speed, if not already defined.
+// My Nano is running at 16 MHz, so 16 million it shall be.
+// This allows the CPU to correctly set Baud rates, delays etc.
+//
+// This must also be done before anything else.
+#define F_CPU 16000000UL // 16 MHz clock speed
+
+// Pull in the header files for the AVR and the delay utilities. the
+// avr/io header will correctly pull in the appropriate other header 
+// file for our chosen CPU. Neat!
+#include <avr/io.h>
+#include <util/delay.h>
+
+// The main code starts here. Always. Although main() appears to return
+// an int value, it never will because microcontrollers never exit 
+// from main(). The compiler might complain about it though, but it's 
+// only a warning.
+int main(void)
+{
+  // SETUP goes here.
+  //Makes D13 aka PB5 (PORTB, Pin5) an Output
+  DDRB = (1 << PB5); 
+
+  // And here is what Arduino calls loop.
+  while(1) //infinite loop
+  {
+    // Turn on D13 LED.
+    PORTB =  (1 << PB5);
+    _delay_ms(1000);
+
+    // Turn off D13 LED.
+    PORTB= 0x00; //Turns OFF All LEDs
+    _delay_ms(1000); //1 second delay
+  }
+}
+\end{lstlisting}
+
+\subsection{Compile the Code}\label{compile-the-code}
+
+Save the file, \lstinline!File -> Save! or Ctrl-S, then select
+\lstinline!PlatformIO -> Build! or Ctrl-Alt-B to build the program. The
+compiler messages will appear, and then vanish after a couple of
+seconds. Click \lstinline!PlatformIO -> Toggle Build Panel! or press F8
+to display them again.
+
+\subsection{Check for Build Errors}\label{check-for-build-errors}
+
+You will see something like the following:
+
+\begin{lstlisting}
+Processing nanoatmega328 ...
+------------------------------
+Verbose mode can be enabled via `-v, --verbose` option
+Collected 27 compatible libraries
+Looking for dependencies...
+Project does not have dependencies
+Compiling .pioenvs/nanoatmega328/src/blink.o
+
+src/blink.c:6:0: warning: "F_CPU" redefined
+
+#define F_CPU 16000000UL // 16 MHz clock speed
+^
+<command-line>:0:0: note: this is the location of the previous 
+definition
+
+Linking .pioenvs/nanoatmega328/firmware.elf
+Building .pioenvs/nanoatmega328/firmware.hex
+Calculating size .pioenvs/nanoatmega328/firmware.elf
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:     178 bytes (0.5% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+========================= [SUCCESS] Took 0.90 seconds ===============
+\end{lstlisting}
+
+It appears we have a slight problem, we have redefined F\_CPU.
+PlatformIO knows that an Arduino Nano with an AtMega328 runs with a 16
+MHz crystal, so it defines the correct speed for us. This is defined in the file
+\lstinline!/home/norman/.platformio/packages/framework-arduinoavr/boards.txt! (well, it
+is for me anyway, your mileage may vary.) where a number of other details are defined
+to make the system aware of the device, the speeds, baud rates for uploads etc.
+
+We can either:
+
+\begin{itemize}
+\item
+  delete the offending line of code in our \lstinline!blink.c! file, or;
+\item
+  Wrap the code in sentinels, and only define it if it isn't already
+  define. To do this amend line 6 to the following:
+
+\begin{lstlisting}[language=C,firstnumber=6,caption={Fixing F\_CPU warning in AVRBlick.c}]
+#ifndef F_CPU
+#define F_CPU 16000000UL // 16 MHz clock speed
+#endif
+\end{lstlisting}
+\end{itemize}
+
+Then recompile. The warning should now go away. You might need to press
+F8 again to view the compiler output.
+
+\subsection{Gosh, Look How Small it
+is!}\label{gosh-look-how-small-it-is}
+
+Look at the last few lines of the compiler output text:
+
+\begin{lstlisting}[firstnumber=19]
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:     178 bytes (0.5% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+\end{lstlisting}
+
+This is telling you that the entire blink program takes up \emph{only}
+178 bytes of Flash Memory and zero bytes of data space (in the Dynamic
+RAM), on the Nano. What does it take up on an Arduino? Lets see:
+
+\begin{lstlisting}
+Sketch uses 928 bytes (3%) of program storage space. ....
+
+Global variables use 9 bytes (0%) of dynamic memory, ....
+\end{lstlisting}
+
+We have a huge saving in such a tiny program. Just out of interest, I
+compiled the BareMinimum Arduino example, which looks like this:
+
+\begin{lstlisting}[language=C]
+void setup() {
+  // put your setup code here, to run once:
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+}
+\end{lstlisting}
+
+And the compiler told me that:
+
+\begin{lstlisting}
+Sketch uses 444 bytes (1%) of program storage space. ....
+
+Global variables use 9 bytes (0%) of dynamic memory, ....
+\end{lstlisting}
+
+So, our blink code, written in AVR C with none of the Arduino wrappings,
+takes up only 40\% of the space used in Flash Memory by a completely
+empty\footnote{More on the reasons why elsewhere.} Arduino sketch!
+
+\subsection{Upload to Our Board}\label{upload-to-our-board}
+
+Now that we have a clean build, we can upload it to our device. The
+first time we do this with an AVR device, Arduino etc, we will need to
+download the \lstinline!avrdude! tool. This is what we need to program
+our device.
+
+Select \lstinline!PlatformIO -> upload! and wait\ldots{}
+
+Press F8 if the build information vanishes again.
+
+You might see the following, on Linux:
+
+\begin{lstlisting}
+Warning! Please install `99-platformio-udev.rules` and check that your 
+board's PID and VID are listed in the rules.
+https://raw.githubusercontent.com/platformio/platformio/
+develop/scripts/99-platformio-udev.rules
+\end{lstlisting}
+
+(The filename above is all on one line, I've split it to fit on the page.)
+
+This is required to allow non-root users on a Linux system, the ability
+to upload using the USB ports. 
+
+On some systems you might need to add your 
+user to the group \lstinline!dialout! or possibly \lstinline!plugdev! and 
+restart your Atom session to pick up the new group. You can find the correct group
+as follows:
+
+\begin{lstlisting}[language=bash]
+grep -i -e dialout -e plugdev /etc/group
+
+dialout:x:18:
+\end{lstlisting}
+
+In my case, on Centos 7, it's the \lstinline!dialout! group, so:
+
+\begin{lstlisting}[language=bash]
+sudo usermod -a -G dialout $USER
+\end{lstlisting}
+
+
+\subsubsection{Install the Rules File}\label{install-the-rules-file}
+
+Download and install the rules file as follows:
+
+\begin{lstlisting}[language=bash]
+cd /tmp
+
+# The following is all on ONE LINE!
+sudo wget https://raw.githubusercontent.com/platformio/platformio/
+develop/scripts/99-platformio-udev.rules
+
+sudo cp 99-platformio-udev.rules /etc/udev/rules.d/
+
+sudo service udev restart
+cd -
+\end{lstlisting}
+
+or, if that fails:
+
+\begin{lstlisting}[language=bash]
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+cd -
+\end{lstlisting}
+
+\section{Don't Forget Your Port}
