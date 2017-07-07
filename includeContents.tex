@@ -1,23 +1,23 @@
-\frontmatter
+% Define the chapter heading image to be used for all (subsequent) chapters.
+\chapterimage{ChapterImage.jpg} % Chapter heading image
+
+% Don't use these commands because using \mainmatter corrupts the
+% index.
+%\frontmatter
 
 \input{Content/Dedication}
 \input{Content/Introduction}
 
-
-
-\mainmatter
-
-\part{The Arduino}
-
-\chapterimage{ChapterImage.jpg} % Chapter heading image
-
-
-\part{The Atmel AVR}
+% The main meat of the book begins here.
+%\mainmatter
 
 \part{PlatformIO}
 \include{Content/Platformio}
 
-\backmatter
+\part{The Atmel AVR}
+
+% All the backend stuff, appendices, indexes etc.
+%\backmatter
 
 \part{Appendices}
 

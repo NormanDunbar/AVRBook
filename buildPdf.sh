@@ -15,7 +15,7 @@
 #
 
 pdflatex AVRBook.tex
-pdflatex AVRBook.tex
 makeindex -s StyleInd.ist AVRBook.idx
+pdflatex AVRBook.tex
 pdflatex AVRBook.tex
 

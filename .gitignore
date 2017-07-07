@@ -11,6 +11,9 @@
 *.ptc
 *.run.xml
 *.toc
+*.bbl
+*.blg
+*.synctex.gz
 
 !Readme.pdf
 // Commented out for now.

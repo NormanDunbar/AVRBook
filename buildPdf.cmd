@@ -14,7 +14,7 @@ rem Last Modified: 30th June 2017.
 rem
 
 pdflatex AVRBook.tex
-pdflatex AVRBook.tex
 makeindex -s StyleInd.ist AVRBook.idx
+pdflatex AVRBook.tex
 pdflatex AVRBook.tex
 
