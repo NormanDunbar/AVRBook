@@ -52,7 +52,7 @@ IDEs, some of which you may already be using.
 
 As a lot of Windows people \emph{might} not be fully acquainted with the command
 line, I've decided to base the remainder of this book on using the Atom editor
-from Github, and the PlatformIO package for it. 
+from Github, and the \emph{PlatformIO IDE} package for it. 
 
 Installing is simple. Go to \href{https://atom.io}{https://atom.io} where you will be presented with a download link for your operating system. If that is suitable, click it, otherwise choose the `Other Platforms' link and pick the best option from the list. It's best to be wary of the pre-release versions, stick with the current versions instead.
 
@@ -141,9 +141,9 @@ above will be populated by a number of files and directories:
 %\tightlist
 \item
   A directory named \lstinline!lib! and a file, \lstinline!readme.txt! within.
-  The readme file has all the information you will need if you intend to
+  The README file has all the information you will need if you intend to
   write some libraries for this particular project. The source code for
-  the libraries should be kept in this directory.
+  the libraries should be kept in this directory - with a separate directory for each separate library.
 \item
   A directory named \lstinline!src!. This is where you will create your own
   project's source code.
@@ -178,27 +178,18 @@ Now we have our project (Blink) created, we need to write some code, so:
 The new file opens in the editor, so add the following code:
 
 \begin{lstlisting}[language=C,caption={AVRBlink.c}]
-// Define the CPU speed, if not already defined.
-// My Nano is running at 16 MHz, so 16 million it shall be.
-// This allows the CPU to correctly set Baud rates, delays etc.
-//
 // This must also be done before anything else.
+#ifndef F_CPU
 #define F_CPU 16000000UL // 16 MHz clock speed
+#endif
 
-// Pull in the header files for the AVR and the delay utilities. the
-// avr/io header will correctly pull in the appropriate other header 
-// file for our chosen CPU. Neat!
 #include <avr/io.h>
 #include <util/delay.h>
 
-// The main code starts here. Always. Although main() appears to return
-// an int value, it never will because microcontrollers never exit 
-// from main(). The compiler might complain about it though, but it's 
-// only a warning.
 int main(void)
 {
   // SETUP goes here.
-  //Makes D13 aka PB5 (PORTB, Pin5) an Output
+  // Makes D13 aka PB5 (PORTB, Pin5) an output pin
   DDRB = (1 << PB5); 
 
   // And here is what Arduino calls loop.
@@ -235,61 +226,50 @@ Collected 27 compatible libraries
 Looking for dependencies...
 Project does not have dependencies
 Compiling .pioenvs/nanoatmega328/src/blink.o
-
-src/blink.c:6:0: warning: "F_CPU" redefined
-
-#define F_CPU 16000000UL // 16 MHz clock speed
-^
-<command-line>:0:0: note: this is the location of the previous 
-definition
-
+...
+Lots of "compiling ..." stuff here too.
+...
 Linking .pioenvs/nanoatmega328/firmware.elf
 Building .pioenvs/nanoatmega328/firmware.hex
 Calculating size .pioenvs/nanoatmega328/firmware.elf
 AVR Memory Usage
 ----------------
 Device: atmega328p
-
+ 
 Program:     178 bytes (0.5% Full)
 (.text + .data + .bootloader)
-
+ 
 Data:          0 bytes (0.0% Full)
 (.data + .bss + .noinit)
 ========================= [SUCCESS] Took 0.90 seconds ===============
 \end{lstlisting}
 
-It appears we have a slight problem, we have redefined F\_CPU.
-PlatformIO knows that an Arduino Nano with an AtMega328 runs with a 16
-MHz crystal, so it defines the correct speed for us. This is defined in the file
-\lstinline!/home/norman/.platformio/packages/framework-arduinoavr/boards.txt! (well, it
-is for me anyway, your mileage may vary.) where a number of other details are defined
-to make the system aware of the device, the speeds, baud rates for uploads etc.
+Everything looks fine.
 
-We can either:
-
-\begin{itemize}
-\item
-  delete the offending line of code in our \lstinline!blink.c! file, or;
-\item
-  Wrap the code in sentinels, and only define it if it isn't already
-  define. To do this amend line 6 to the following:
+You may be wondering why we wrap the setting of \lstinline!F\_CPU! in the following manner:
 
 \begin{lstlisting}[language=C,firstnumber=6,caption={Fixing F\_CPU warning in AVRBlick.c}]
 #ifndef F_CPU
 #define F_CPU 16000000UL // 16 MHz clock speed
 #endif
 \end{lstlisting}
-\end{itemize}
 
-Then recompile. The warning should now go away. You might need to press
-F8 again to view the compiler output.
+This is beacuse PlatformIO knows that an Arduino Nano with an AtMega328 runs with a 16
+MHz crystal, so it defines the correct speed for us. This is defined in the file:
+
+\lstinline!/home/norman/.platformio/packages/framework-arduinoavr/boards.txt!
+
+Well, it is for me anyway, your mileage may vary, where a number of other details are defined
+to make the system aware of the device, the speeds, baud rates for uploads etc.
+
+If we are using something like Atmel Studio, then that might not set it correctly, so the correct setting would be applied there, as well as here.
 
 \subsection{Gosh, Look How Small it
 is!}\label{gosh-look-how-small-it-is}
 
 Look at the last few lines of the compiler output text:
 
-\begin{lstlisting}[firstnumber=19]
+\begin{lstlisting}[firstnumber=14]
 AVR Memory Usage
 ----------------
 Device: atmega328p
