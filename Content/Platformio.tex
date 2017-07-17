@@ -3,16 +3,15 @@
 \section{PlatformIO}\label{platformio}\index{PlatformIO}
 
 \href{http://platformio.org/}{PlatformIO} is a command line\footnote{Panic
-  not Windows users, the command line is not your mortal enemy. In fact,
-  you can get stuff done a lot quicker in the command line, \emph{most}
-  of the time. Once you get to know it of course.} and IDE based utility
+ not Windows users, the command line is not your mortal enemy. In fact,
+ you can get stuff done a lot quicker in the command line, \emph{most}
+ of the time. Once you get to know it of course.} and IDE based utility
 that allows you to write plain C or C++ code to upload to your Arduino,
 or, almost any other embedded microcontroller that is known to man,
 woman or hamster! At the time of writing, 5th July 2017, PlatformIO
 supported:
 
 \begin{itemize}
-%\tightlist
 \item
   23 Development Platforms
 \item
@@ -35,7 +34,6 @@ difficulty.
 PlatformIO comes in two main flavours:
 
 \begin{itemize}
-%\tightlist
 \item
   The command line version\footnote{See previous footnote!}
 \item
@@ -66,7 +64,6 @@ Atom}\label{installing-platformio-in-atom}
 We will install the following 2 PlatformIO packages for Atom:
 
 \begin{itemize}
-%\tightlist
 \item
   platformio-ide (version 2.0.0 beta 7 is the latest at the time of
   writing)
@@ -75,18 +72,18 @@ We will install the following 2 PlatformIO packages for Atom:
   writing)
 \end{itemize}
 
-Open Atom and select the \lstinline!edit -> Preferences! menu option.
-When the `Settings' tab appears, look down to find the option labelled
-`+ Install' and choose it.
+Open Atom and select the \inline{edit -> Preferences} menu option.
+When the \inline{Settings} tab appears, look down to find the option labelled
+\inline{+ Install} and choose it.
 
-Search for `platformio' and a list of available options will soon be
-displayed. Find the two packages mentioned above and click the `install'
+Search for \inline{platformio} and a list of available options will soon be
+displayed. Find the two packages mentioned above and click the \inline{install}
 button. Wait \ldots{}.
 
 Eventually you will be prompted to restart Atom, so do so.
 
 If, on the restart, you are prompted to Install Clang go ahead and do
-so, if you wish, or select \lstinline!Disable Code Completion!. Clang
+so, if you wish, or select \inline{Disable Code Completion}. Clang
 will have to be installed using your package manager - it's not a
 package for Atom but for the entire system. Full details are
 \href{http://docs.platformio.org/en/latest/ide/atom.html\#ii-clang-for-intelligent-code-completion}{here}.
@@ -104,7 +101,7 @@ screen.
 \subsection{Create the Blink Project}\label{create-the-blink-project}
 
 Open the Atom editor, if not already running, and make sure that you can
-see the PlatformIO Welcome Screen. Click on `+ New Project' to start the
+see the PlatformIO Welcome Screen. Click on \inline{+ New Project} to start the
 New Project Wizard.
 
 You must first select a board. As I'm using an Arduino Nano, for this
@@ -114,64 +111,65 @@ different.
 You will hopefully notice that when you have selected a board, you get
 to select another, and another \ldots{}. this is a feature of PlatformIO
 in that it allows you to use the same source code for multiple boards
-and/or microcontrollers. Nice. I sometimes build for the Nano, the Uno,
-the Duemilenova and for the stand-alone AtTiny85.
+and/or microcontrollers. This is very nice as I sometimes build for the Nano, the Uno,
+the Duemilenova and for the stand-alone AtTiny85 - so I can pretty much use the same code
+for all of the above. (The AtTiny85 needs a few \inline{\#define}s to compile the same code though!)
 
 For now, however, let's stick with a single board.
 
 Now select a directory to save the code in. My choice is:
 
-\begin{quote}
-\lstinline!/home/norman/SourceCode/PlatformIO/Blink!
-\end{quote}
+ \inline{/home/norman/SourceCode/PlatformIO/AVRBlink}
 
 you might want to choose something different, especially if you are on
 Windows!
+
+\begin{note}
+You can obtain the source code, but not the PlatformIO project files etc, for all the examples in this book from \href{https://github.com/NormanDunbar/AVRBook}{GitHub} - look for the folder named \inline{SourceCode}. The code will be found in the same part and/or chapter as the book.
+\end{note}
 
 Click the `Process' button.
 
 The first time PlatformIO is used, it needs to connect to the internet
 to install the appropriate tools for the board you have chosen. In the
-case of the Nano, this is `platform: atmelavr'. Just wait \ldots{}.
+case of the Nano, this is \inline{platform: atmelavr}. Just wait while it does what it needs to do.
 
 When the processing has completed, the output directory that you chose
 above will be populated by a number of files and directories:
 
 \begin{itemize}
-%\tightlist
 \item
-  A directory named \lstinline!lib! and a file, \lstinline!readme.txt! within.
+  A directory named \inline{lib} and a file, \inline{readme.txt} within.
   The README file has all the information you will need if you intend to
   write some libraries for this particular project. The source code for
   the libraries should be kept in this directory - with a separate directory for each separate library.
 \item
-  A directory named \lstinline!src!. This is where you will create your own
+  A directory named \inline{src}. This is where you will create your own
   project's source code.
 \item
-  A file named \lstinline!.gitignore!. This (hidden on Linux) file tells git, if in use for
+  A file named \inline{.gitignore}. This (hidden on Linux) file tells git, if in use for
   version control, to ignore a number of files that are not required in
   normal circumstances, usually files that can be recreated at will.
 \item
-  A file named \lstinline!.travis.yml!. This (hidden on Linux) file is a YAML source file that
+  A file named \inline{.travis.yml}. This (hidden on Linux) file is a YAML source file that
   tells the Travis `Continuous Integration' system what to do whenever
   something in the project changes. We will not be using this feature.
 \item
-  A file named \lstinline!platformio.ini!. This file tells PlatformIO how the
+  A file named \inline{platformio.ini}. This file tells PlatformIO how the
   project will be built and uploaded to the microcontroller, for each
   board you selected when creating the project.
 \end{itemize}
 
 \subsection{Write the Blink Code}\label{write-the-blink-code}
 
-Now we have our project (Blink) created, we need to write some code, so:
+Now we have our project (AVRBlink) created, we need to write some code, so:
 
 \begin{itemize}
-%\tightlist
 \item
-  Right-click the `src' folder in the `Project' tab, and select
-  \lstinline!New File! from the context menu that appears.
+  Right-click the \inline{src} folder in the \inline{Project} tab, and select
+  \inline{New File} from the context menu that appears.
 \item
-  Enter the file name when prompted, I chose `blink.c', but you can name
+  Enter the file name when prompted, I chose \inline{AVRBlink.c}, but you can name
   the file as you wish.
 \end{itemize}
 
@@ -208,10 +206,10 @@ int main(void)
 
 \subsection{Compile the Code}\label{compile-the-code}
 
-Save the file, \lstinline!File -> Save! or Ctrl-S, then select
-\lstinline!PlatformIO -> Build! or Ctrl-Alt-B to build the program. The
+Save the file, \inline{File -> Save} or \inline{Ctrl-S}, then select
+\inline{PlatformIO -> Build} or \inline{Ctrl-Alt-B} to build the program. The
 compiler messages will appear, and then vanish after a couple of
-seconds. Click \lstinline!PlatformIO -> Toggle Build Panel! or press F8
+seconds. Click \inline{PlatformIO -> Toggle Build Panel} or press F8
 to display them again.
 
 \subsection{Check for Build Errors}\label{check-for-build-errors}
@@ -246,9 +244,9 @@ Data:          0 bytes (0.0% Full)
 
 Everything looks fine.
 
-You may be wondering why we wrap the setting of \lstinline!F\_CPU! in the following manner:
+You may be wondering why we wrap the setting of \inline{F\_CPU} in the following manner:
 
-\begin{lstlisting}[language=C,firstnumber=6,caption={Fixing F\_CPU warning in AVRBlick.c}]
+\begin{lstlisting}[language=C,firstnumber=2,caption={Wrapping F\_CPU in AVRBlink.c}]
 #ifndef F_CPU
 #define F_CPU 16000000UL // 16 MHz clock speed
 #endif
@@ -257,7 +255,7 @@ You may be wondering why we wrap the setting of \lstinline!F\_CPU! in the follow
 This is beacuse PlatformIO knows that an Arduino Nano with an AtMega328 runs with a 16
 MHz crystal, so it defines the correct speed for us. This is defined in the file:
 
-\lstinline!/home/norman/.platformio/packages/framework-arduinoavr/boards.txt!
+\inline{/home/norman/.platformio/packages/framework-arduinoavr/boards.txt}
 
 Well, it is for me anyway, your mileage may vary, where a number of other details are defined
 to make the system aware of the device, the speeds, baud rates for uploads etc.
@@ -283,7 +281,50 @@ Data:          0 bytes (0.0% Full)
 
 This is telling you that the entire blink program takes up \emph{only}
 178 bytes of Flash Memory and zero bytes of data space (in the Dynamic
-RAM), on the Nano. What does it take up on an Arduino? Lets see:
+RAM), on the Nano. 
+
+I can even get it down to 158 bytes by replacing the code with the following:
+
+\begin{lstlisting}[language=C,caption={AVRBlinkSmall.c}]
+// This must also be done before anything else.
+#ifndef F_CPU
+#define F_CPU 16000000UL // 16 MHz clock speed
+#endif
+
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void)
+{
+  // SETUP goes here.
+  // Makes D13 aka PB5 (PORTB, Pin5) an output pin
+  DDRB = (1 << PB5); 
+
+  // And here is what Arduino calls loop.
+  while(1) //infinite loop
+  {
+    // Toggle on D13 LED.
+    PINB =  (1 << PB5);
+    _delay_ms(1000);
+  }
+}
+\end{lstlisting}
+
+Compiling the above, results in this at the end:
+
+\begin{lstlisting}[firstnumber=14]
+AVR Memory Usage
+----------------
+Device: atmega328p
+ 
+Program:     158 bytes (0.5% Full)
+(.text + .data + .bootloader)
+ 
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+\end{lstlisting}
+
+How much space does Blink take up when compiled in the Arduino IDE? Lets see:
 
 \begin{lstlisting}
 Sketch uses 928 bytes (3%) of program storage space. ....
@@ -291,8 +332,7 @@ Sketch uses 928 bytes (3%) of program storage space. ....
 Global variables use 9 bytes (0%) of dynamic memory, ....
 \end{lstlisting}
 
-We have a huge saving in such a tiny program. Just out of interest, I
-compiled the BareMinimum Arduino example, which looks like this:
+We have a huge saving in such a tiny program. Just out of interest, I compiled the BareMinimum Arduino example, which looks like this:
 
 \begin{lstlisting}[language=C]
 void setup() {
@@ -318,12 +358,84 @@ empty\footnote{More on the reasons why elsewhere.} Arduino sketch!
 
 \subsection{Upload to Our Board}\label{upload-to-our-board}
 
-Now that we have a clean build, we can upload it to our device. The
-first time we do this with an AVR device, Arduino etc, we will need to
-download the \lstinline!avrdude! tool. This is what we need to program
+Uploading to the board can be either through a USB cable, as we do with the Arduino software, or, using an ISP programmer and the 6 pins on the Arduino board. Which is best?
+
+By default, PlatformIO assumes that you will be using a USB cable, so the file \inline{platformio.ini} is already suitable, and when you come to upload, the desired port will (or should) be detected automatically.
+
+If you are using an ISP programmer instead of the USB cable, then you must update the\\ \inline{platformio.ini} file to tell it which programmer you are using and the protocol. In addition, to upload firmware using an ISP programmer, you need to use \inline{target = program} instead \inline{target = upload} - which is the default. 
+
+You will need to add \inline{target = program} to your \inline{platformio.ini} file. Don't forget to save it before attempting to upload/program!\footnote{Yes, I forgot!} When you next attempt an upload, you will see the text \inline{target: program} at the very top of the compile/upload listing when you press F8.
+
+
+Here are a few configurations for various programmers, taken from the \href{http://docs.platformio.org/en/latest/platforms/atmelavr.html?highlight=usbtiny#upload-using-programmer}{PlatformIO docs}. Add the following lines to your \inline{platformio.ini} file for the corresponding programmer:
+
+\begin{lstlisting}[caption={The \inline{platformio.ini} additions for `AVRISP' ISP Programmer}]
+    upload_protocol = stk500v1
+    upload_flags = -P$UPLOAD_PORT
+
+    ; edit this line with valid upload port
+    upload_port = SERIAL_PORT_HERE
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption={The \inline{platformio.ini} additions for `AVRISP MkII' Programmer}]
+    upload_protocol = stk500v2
+    upload_flags = -Pusb
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption={The \inline{platformio.ini} additions for `USBTinyISP' Programmer}]
+    upload_protocol = usbtiny
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption={The \inline{platformio.ini} additions for `ArduinoISP` Programmer}]
+    upload_protocol = arduinoisp
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption={The \inline{platformio.ini} additions for `USBasp' ISP Programmer}]
+    upload_protocol = usbasp
+    upload_flags = -Pusb
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption={The \inline{platformio.ini} additions for `Parallel Port' ISP Programmer}]
+    upload_protocol = dapa
+    upload_flags = -F
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption={The \inline{platformio.ini} additions for `Arduino as ISP` Programmer}]
+    upload_protocol = stk500v1
+    upload_flags = -P$UPLOAD_PORT -b$UPLOAD_SPEED
+
+    ; edit these lines
+    upload_port = SERIAL_PORT_HERE
+    upload_speed = 19200
+\end{lstlisting}
+
+The latter one is used when you have a spare Arduino lying around doing nothing, and you have set it up to be used as an ISP programmer for AVR chips that don't have a bootloader, or simply because you want to! There will be more of this matter soon.
+
+\begin{warning}
+You should also be aware that if you program an Arduino using the ISP programmer, you cannot subsequently use the USB cable until you have burned the bootloader back into the chip. Ask me how I know! The steps to do this are simple:
+
+\begin{itemize}
+\item Connect your USB cable to the Arduino and to your computer.
+\item Open the Arduino IDE.
+\item Ensure that your board and port are correctly defined under \inline{tools -> board}.
+\item Ensure that the programmer is set to AVRisp MK II (or AVR isp).
+\item Select \inline{Tools -> Burn bootloader}.
+\end{itemize}
+
+After a few flashes of the built in LED, the bootloader will have been burned back into the chip. 
+\end{warning}
+
+The first time we do this with an AVR device, Arduino etc, we will need to
+download the \inline{avrdude} tool. This is what we need to program
 our device.
 
-Select \lstinline!PlatformIO -> upload! and wait\ldots{}
+Select \inline{PlatformIO -> upload} and wait\ldots{}
 
 Press F8 if the build information vanishes again.
 
@@ -342,7 +454,7 @@ This is required to allow non-root users on a Linux system, the ability
 to upload using the USB ports. 
 
 On some systems you might need to add your 
-user to the group \lstinline!dialout! or possibly \lstinline!plugdev! and 
+user to the group \inline{dialout} or possibly \inline{plugdev} and 
 restart your Atom session to pick up the new group. You can find the correct group
 as follows:
 
@@ -352,7 +464,7 @@ grep -i -e dialout -e plugdev /etc/group
 dialout:x:18:
 \end{lstlisting}
 
-In my case, on Centos 7, it's the \lstinline!dialout! group, so:
+In my case, on Centos 7, it's the \inline{dialout} group, so:
 
 \begin{lstlisting}[language=bash]
 sudo usermod -a -G dialout $USER
@@ -384,4 +496,4 @@ sudo udevadm trigger
 cd -
 \end{lstlisting}
 
-\section{Don't Forget Your Port}
+

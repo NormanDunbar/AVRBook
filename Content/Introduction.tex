@@ -1,67 +1,30 @@
 \section*{Introduction}\label{introduction}
 
-This book is for those of us who have played with, and perhaps mastered,
-the Arduino in its various forms, and who need now to move up to
-programming it - or home made clones on breadboards or stripboard (or
-even, home made PCBs) and so on - in plain vanilla C code.
+This book is for those of us who have played with, and perhaps mastered, the Arduino in its various forms, and who need now to move up to programming it - or home made clones on breadboards or stripboard (or even, home made PCBs) and so on - in plain vanilla C code.
 
-This need could be for many reasons, running out of space, too slow,
-lots of hidden things going on that are interfering with the project we
-have in mind etc. You might even have found that you can replace a full
-Arduino with a small AtTiny85, for example, and get exactly the same
-results, for a lot less outlay.
+This need could be for many reasons, running out of space, too slow, lots of hidden things going on that are interfering with the project we have in mind etc. You might even have found that you can replace a full Arduino with a small AtTiny85, for example, and get exactly the same results, for a lot less outlay.
 
-This book should help with that migration. It's not difficult, but it's
-not easy either. You will have to think a lot more at the hardware
-level, which the Arduino environment abstracts away for you, to make it
-simple.
+This book should help with that migration. It's not difficult, but it's not easy either. You will have to think a lot more at the hardware level, which the Arduino environment abstracts away for you, to make it simple.
 
-Interrupts, timers and sleep modes will figure largely in what we do
-with AVR programming - we don't want to be wasting time waiting for
-someone to press a switch, or a sensor to register a reading, for
-example. And if there's nothing for the AVR to do while it waits around,
-we let it sleep! This saves power and could mean the difference between
-your project being able to run for months, if not years, on a couple of
-batteries, and having to be constantly plugged into the mains.
+Interrupts, timers and sleep modes will figure largely in what we do with AVR programming - we don't want to be wasting time waiting for someone to press a switch, or a sensor to register a reading, for example. And if there's nothing for the AVR to do while it waits around, we let it sleep! This saves power and could mean the difference between your project being able to run for months, if not years, on a couple of batteries, and having to be constantly plugged into the mains.
 
-Just remember, \texttt{delay()} is not your best friend when programming
-the Arduino or the AVR. Hopefully, you will find this out later when you
-read on.
+Just remember, \texttt{delay()} is not your best friend when programming the Arduino or the AVR. Hopefully, you will find this out later when you read on.
 
 \subsection*{Hardware Necessary}\label{hardware-necessary}
 
 \begin{itemize}
 \item
-  An Arduino, perhaps. It's not essential, but you can use one to
-  program bare AVR microcontrollers if you don't have a ISP programmer.
-  A \emph{Nano} or \emph{Uno} etc are probably best. The Mega is perhaps
-  a tad overkill as an ISP programmer!
+  An Arduino, perhaps. It's not essential, but you can use one to program bare AVR microcontrollers - those you buy without a bootloader -   if you don't have a ISP programmer.
+  
+  A \emph{Nano} or \emph{Uno} etc are probably best. The \emph{Mega} is perhaps a tad overkill as an ISP programmer!
 \item
-  If you don't have a spare Arduino lying around, then you will need an
-  ISP programmer. I got mine on eBay for around £3.28 including postage,
-  from a seller named finetech007, in China. Other suppliers are
-  available. The programmer allows you to save the 2Kb that an Arduino
-  bootloader takes up, but obviously stops you programming the device
-  using that bootloader.
+  If you don't have a spare Arduino lying around, then you might need an ISP programmer. You don't \emph{need} one as the standard Arduino method of programming over the USB cable will still work.
+  
+  I got mine on eBay for around £3.28 including postage, from a seller named finetech007, in China. Other suppliers are available. The programmer allows you to save the 2Kb that an Arduino bootloader takes up, but obviously stops you programming the device using that bootloader, over the normal USB cable.
 
-  Don't worry if you don't have an ISP programmer, as mentioned above,
-  your existing Arduino can be used to program (other) AVR
-  micro-controllers. And if you don't have an Arduino, why not build
-  your own? Grab hold of a
-  \href{http://start.shrimping.it/project/protected/build.html}{Protected
-  Shrimp} kit for around £10.00\footnote{Prices correct at the time of
-    writing.}, or a more permanent (some soldering required)
-  \href{http://start.shrimping.it/kit/stripboard.html}{Copper Shrimp}
-  add on kit for £1.90 from those nice people at
-  \href{http://start.shrimping.it//index.html}{ShrimpingIT}. I started
-  with an Arduino Duemilanove which was bought for me as a gift, but I
-  built my own Shrimp Kit just for the fun of it. I've built a few more
-  since then!
+  Don't worry if you don't have an ISP programmer, as mentioned above, your existing Arduino can be used to program (other) AVR   micro-controllers. And if you don't have an Arduino, why not build your own? Grab hold of a \href{http://start.shrimping.it/project/protected/build.html}{Protected Shrimp} kit for around £10.00\footnote{Prices correct at the time of writing.}, or a more permanent (some soldering required) \href{http://start.shrimping.it/kit/stripboard.html}{Copper Shrimp} add on kit for £1.90 from those nice people at \href{http://start.shrimping.it//index.html}{ShrimpingIT}. I started with an Arduino Duemilanove which was bought for me as a gift, but I built my own Shrimp Kit just for the fun of it. I've built a few more since then!
 \item
-  A breadboard and assorted components, wires, etc. This is limited to
-  the odd switch, LED and such like. Maybe a shift register or two will
-  be handy - it depends on what you are expecting to achieve with the
-  AVR. (Or, what I decide to include in the book!)
+  A breadboard and assorted components, wires, etc. This is limited to the odd switch, LED and such like. Maybe a shift register or two will be handy - it depends on what you are expecting to achieve with the   AVR. (Or, what I decide to include in the book!)
 \end{itemize}
 
 \subsection*{Coming Up}\label{coming-up}
