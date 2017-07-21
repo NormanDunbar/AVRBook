@@ -66,6 +66,8 @@
 %----------------------------------------------------------------------------------------
 \usepackage{listings}
 \usepackage{multirow}
+\usepackage{longtable}
+\usepackage{datetime2}
 
 %----------------------------------------------------------------------------------------
 % NDunbar: - I need admonition boxes in colour.
@@ -105,6 +107,8 @@
   stringstyle=\color{wwwDarkOrchid},
   tabsize=2,
   title=\lstname,
+  breaklines=true,  % Force code lines to break at the margin
+  postbreak=\mbox{\textcolor{ocre}{\textbf{$\Longrightarrow$}}\space}, % add a broken line indicator.
 %----------------------------------------------------------------------------------------
 % I like Assembler, it's my default, ok?
 %----------------------------------------------------------------------------------------
