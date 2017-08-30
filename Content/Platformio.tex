@@ -2,14 +2,25 @@
 
 \section{PlatformIO}\label{platformio}\index{PlatformIO}
 
-\href{http://platformio.org/}{PlatformIO} is a command line\footnote{Panic
- not Windows users, the command line is not your mortal enemy. In fact,
- you can get stuff done a lot quicker in the command line, \emph{most}
- of the time. Once you get to know it of course.} and IDE based utility
-that allows you to write plain C or C++ code to upload to your Arduino,
-or, almost any other embedded microcontroller that is known to man,
-woman or hamster! At the time of writing, 5th July 2017, PlatformIO
-supported:
+\href{http://platformio.org/}{PlatformIO} comes in two separate versions:
+
+\begin{itemize}
+	\item PlatformIO Core;
+	\item PlatformIO IDE;
+\end{itemize}	
+
+There is also a debugger available. 
+
+PlatformIO Core is a \emph{command line utility}\footnote{Panic
+not Windows users, the command line is not your mortal enemy. In fact,
+you can get stuff done a lot quicker in the command line, \emph{most}
+of the time. Once you get to know it of course.} which supplied the commands to initialise, create, compile, amend and upload code to your micro controller. 
+
+The PlatformIO IDE code is available to install into a number of editors and/or IDEs and allows you to use PlatformIO from within your editor or IDE. This option \emph{does not} require that the Core software be installed already, in fact, the IDE version will install the Core commands into your shell\footnote{Windows users - the shell is the Linux equivalent of your command line.} should you require this.
+
+We shall be using the IDE option in this book, installed into the Atom editor.
+
+PlatformIO allows you to create projects for your Arduino, or, almost any other embedded micro controller that is known to man, woman or hamster! At the time of writing, 5th July 2017, PlatformIO supported:
 
 \begin{itemize}
 \item
@@ -28,14 +39,13 @@ supported:
 
 You can use it to replace the Arduino IDE too, if you wish, as it
 understands plain Arduino code as well as AVR C code. Arduino sketches
-can be imported unchanged, worked on, compiled and uploaded without any
-difficulty.
+can be imported unchanged, worked on, compiled and uploaded without any difficulty.
 
-PlatformIO comes in two main flavours:
+As mentioned above, PlatformIO comes in two main flavours:
 
 \begin{itemize}
 \item
-  The command line version\footnote{See previous footnote!}
+  The command line version\footnote{See previous footnote!} - also known as PlatformIO Core.
 \item
   An IDE version for the Atom editor, or Visual Studio. This also allows
   you to run the command line commands without having to install that
@@ -48,9 +58,7 @@ IDEs, some of which you may already be using.
 
 \subsection{Installing Atom}\label{installing-atom}
 
-As a lot of Windows people \emph{might} not be fully acquainted with the command
-line, I've decided to base the remainder of this book on using the Atom editor
-from Github, and the \emph{PlatformIO IDE} package for it. 
+As a lot of Windows people \emph{might} not be fully acquainted with the command line, I've decided to base the remainder of this book on using the Atom editor from Github, and the \emph{PlatformIO IDE} package for it. However, I will explain the Core features, for those of us who want to use our own editor, for example.
 
 Installing is simple. Go to \href{https://atom.io}{https://atom.io} where you will be presented with a download link for your operating system. If that is suitable, click it, otherwise choose the `Other Platforms' link and pick the best option from the list. It's best to be wary of the pre-release versions, stick with the current versions instead.
 
@@ -94,26 +102,87 @@ found
 
 You will know that you have installed PlatformIO when you restart Atom
 and see a `bug face' looking back at you from the PlatformIO welcome
-screen.
+screen - this is the PlatformIO Home page.
+
+\subsection{Installing Shell Commands}\label{installing-shell-commands}
+
+Should you wish to install the PlatformIO Core commands for your system, then:
+
+\begin{itemize}
+	\item Click the PlatformIO menu item;
+	\item Click Install Shell Commands option.
+\end{itemize}
+
+Hopefully, that will all work, however, as it uses the \inline{sudo} command, it \emph{may} fail to execute properly if your version of \inline{sudo} requires a password. However, PlatformIO helpfully displays the two commands that need to be executed in a shell session to enable the shell commands:
+
+\begin{lstlisting}[caption={Install PlatformIO Shell Commands Manually}]
+sudo ln -s /home/<yourname>/.platformio/penv/bin/platformio /usr/local/bin/platformio
+
+sudo ln -s /home/<yourname>/.platformio/penv/bin/pio /usr/local/bin/pio
+\end{lstlisting}
+
+\emph{Obviously} you will have to replace <your name> as appropriate, but PlatformIO will display the correct commands for you to type in. When you do enter them, you will have to supply your \inline{sudo} password.
+
+Once complete, you will have two new commands, \inline{pio} and \inline{platformio} - which are both the same, the former is pretty much a shortcut for the latter.
+
+\begin{note}
+	I have not run this on a Windows system, so I cannot guarantee that the option will be available, sorry.
+\end{note}
 
 \section{PlatformIO Quick Start}\label{platformio-quick-start}
 
-\subsection{Create the Blink Project}\label{create-the-blink-project}
+\subsection{Create the Arduino Blink Project}\label{create-the-arduino-blink-project}
 
-Open the Atom editor, if not already running, and make sure that you can
-see the PlatformIO Welcome Screen. Click on \inline{+ New Project} to start the
-New Project Wizard.
+I mentioned previously, somewhere, that PlatformIO can import plain Arduino projects. In fact, it has all the Adruino examples available. To start with, we will create the Arduino Blink program - after all, that's where everyone starts, isn't it?
 
-You must first select a board. As I'm using an Arduino Nano, for this
-example, that's what I'll be selecting. You may choose something
-different.
+Open the Atom editor, if not already open, and click \inline{PlatformIO$\rightarrow$Project Examples}. You will be notified, on the first occasion, that internet access will be required.
 
-You will hopefully notice that when you have selected a board, you get
-to select another, and another \ldots{}. this is a feature of PlatformIO
-in that it allows you to use the same source code for multiple boards
-and/or microcontrollers. This is very nice as I sometimes build for the Nano, the Uno,
-the Duemilenova and for the stand-alone AtTiny85 - so I can pretty much use the same code
-for all of the above. (The AtTiny85 needs a few \inline{\#define}s to compile the same code though!)
+In the drop down list, find, and select \inline{atmelavr/arduino-blink} and it will be added to the list of examples that will be installed. You can install more than one, but for now, stick with the one example.\footnote{If you go to \url{https://github.com/platformio/platformio-examples/archive/develop.zip} you can download the set of examples for a number of platforms.}
+
+Click the \inline{prepare} button. After a very brief pause, you should notice that the project window has changed and a new folder named \inline{arduino-blink} appears there. Open up the \inline{src} folder and double-click on the file \inline{Blink.cpp} which you should find there.
+
+You will see something like the following:
+
+\lstinputlisting[language=C,caption={Arduino Blink Example}]{AVRCode/Part1/PlatformIO_Quick_Start/ArduinoBlink.cpp}
+
+Looks familiar? It should do, it's simply the Arduino Blink example code, with one minor difference, the inclusion of the \inline{Arduino.h} header file.
+
+You can compile and upload the example code as follows:
+
+\begin{itemize}
+	\item Click \inline{PlatformIO$\rightarrow$Build}, or press \inline{CTRL+ALT+B}, or click the ``\checkmark'' in the boxes at the far left of the window - all of these will compile the code.
+	
+	\item Click \inline{PlatformIO$\rightarrow$Upload}, or press \inline{CTRL+ALT+U}, or click the ``$\Rightarrow$'' in the boxes at the far left of the window - all of these will upload the compiled code to your micro controller.
+\end{itemize}
+
+When the compilation is done, press F8 if the compilation log is not visible at the bottom of the screen.
+
+\begin{lstlisting}[numbers={none},caption={Arduino Blink Memory Usage}]
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:     928 bytes (2.8% Full)
+
+(.text + .data + .bootloader)
+
+Data:          9 bytes (0.4% Full)
+(.data + .bss + .noinit)
+\end{lstlisting}
+
+You will note, hopefully, that the example code is using a total of 928 bytes, plus a further 9 bytes for some data. I make that 937 bytes in total.
+
+Keep a note of that figure for later\ldots{}.
+
+\subsection{Create the AVR Blink Project}\label{create-the-avr-blink-project}
+
+Open the Atom editor, if not already running, and make sure that you can see the PlatformIO Home Screen. Click on \inline{+ New Project} to start the New Project Wizard. Alternatively, click \inline{PlatformIO$\rightarrow$Initialize or Update PlatformIO Project}.
+
+If the PlatformIO Home Screen is not visible, click \inline{PlatformIO$\rightarrow$PlatformIO Home} to make it visible.
+
+You must first select a board. As I'm using an Arduino Nano with an AtMega328 micro controller, for this example, that's what I'll be selecting. You may choose something different.
+
+You will hopefully notice that when you have selected a board, you get to select another, and another \ldots{}. this is a feature of PlatformIO in that it allows you to use the same source code for multiple boards and/or microcontrollers. This is very nice as I sometimes build for the Nano, the Uno, the Duemilenova and for the stand-alone AtTiny85 - so I can pretty much use the same code for all of the above. (The AtTiny85 needs a few \inline{\#define}s to compile the same code though!)
 
 For now, however, let's stick with a single board.
 
@@ -175,36 +244,7 @@ Now we have our project (AVRBlink) created, we need to write some code, so:
 
 The new file opens in the editor, so add the following code:
 
-\begin{lstlisting}[language=C,caption={AVRBlink.c}]
-// This must also be done before anything else.
-#ifndef F_CPU
-#define F_CPU 16000000UL // 16 MHz clock speed
-#endif
-
-#include <avr/io.h>
-#include <util/delay.h>
-
-int main(void)
-{
-  // SETUP goes here.
-  // Makes D13 aka PB5 (PORTB, Pin5) an output pin
-  DDRB = (1 << PB5); 
-
-  // And here is what Arduino calls loop.
-  while(1) //infinite loop
-  {
-    // Turn on D13 LED.
-    PORTB =  (1 << PB5);
-    _delay_ms(1000);
-
-    // Turn off D13 LED.
-    PORTB= 0x00; //Turns OFF All LEDs
-    _delay_ms(1000); //1 second delay
-  }
-}
-\end{lstlisting}
-
-\subsection{Compile the Code}\label{compile-the-code}
+\lstinputlisting[language=C,caption={AVRBlink.c - AVR Blink Example}]{AVRCode/Part1/PlatformIO_Quick_Start/AVRBlink.c}
 
 Save the file, \inline{File -> Save} or \inline{Ctrl-S}, then select
 \inline{PlatformIO -> Build} or \inline{Ctrl-Alt-B} to build the program. The
@@ -212,37 +252,19 @@ compiler messages will appear, and then vanish after a couple of
 seconds. Click \inline{PlatformIO -> Toggle Build Panel} or press F8
 to display them again.
 
-\subsection{Check for Build Errors}\label{check-for-build-errors}
-
-You will see something like the following:
-
-\begin{lstlisting}
-Processing nanoatmega328 ...
-------------------------------
-Verbose mode can be enabled via `-v, --verbose` option
-Collected 27 compatible libraries
-Looking for dependencies...
-Project does not have dependencies
-Compiling .pioenvs/nanoatmega328/src/blink.o
-...
-Lots of "compiling ..." stuff here too.
-...
-Linking .pioenvs/nanoatmega328/firmware.elf
-Building .pioenvs/nanoatmega328/firmware.hex
-Calculating size .pioenvs/nanoatmega328/firmware.elf
+\begin{lstlisting}[numbers={none},caption={AVR Blink Memory Usage}]
 AVR Memory Usage
 ----------------
 Device: atmega328p
- 
-Program:     178 bytes (0.5% Full)
-(.text + .data + .bootloader)
- 
-Data:          0 bytes (0.0% Full)
-(.data + .bss + .noinit)
-========================= [SUCCESS] Took 0.90 seconds ===============
-\end{lstlisting}
 
-Everything looks fine.
+Program:     178 bytes (0.5% Full)
+
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)\end{lstlisting}
+
+You will note, hopefully, that this AVR example code is only using 178 bytes of code, and no data. I make that around one fifth (20\%) of the Arduino example's 937 bytes in total.
 
 You may be wondering why we wrap the setting of \inline{F\_CPU} in the following manner:
 
@@ -252,20 +274,19 @@ You may be wondering why we wrap the setting of \inline{F\_CPU} in the following
 #endif
 \end{lstlisting}
 
-This is beacuse PlatformIO knows that an Arduino Nano with an AtMega328 runs with a 16
+This is because PlatformIO knows that an Arduino Nano with an AtMega328 runs with a 16
 MHz crystal, so it defines the correct speed for us. This is defined in the file:
 
 \inline{/home/norman/.platformio/packages/framework-arduinoavr/boards.txt}
 
-Well, it is for me anyway, your mileage may vary, where a number of other details are defined
-to make the system aware of the device, the speeds, baud rates for uploads etc.
+Well, it is for me anyway, your mileage may vary, where a number of other details are defined to make the system aware of the device, the speeds, baud rates for uploads etc.
 
 If we are using something like Atmel Studio, then that might not set it correctly, so the correct setting would be applied there, as well as here.
 
 \subsection{Gosh, Look How Small it
 is!}\label{gosh-look-how-small-it-is}
 
-Look at the last few lines of the compiler output text:
+Looking at the last few lines of the compiler output text for the \inline{AVRBlink.c} example, we see the following, which you may remember from above:
 
 \begin{lstlisting}[firstnumber=14]
 AVR Memory Usage
@@ -281,34 +302,10 @@ Data:          0 bytes (0.0% Full)
 
 This is telling you that the entire blink program takes up \emph{only}
 178 bytes of Flash Memory and zero bytes of data space (in the Dynamic
-RAM), on the Nano. 
+RAM), on the Nano.  Can we get it any smaller? Try this:
 
-I can even get it down to 158 bytes by replacing the code with the following:
+\lstinputlisting[language=C,caption={AVRBlinkSmall.c - A Smaller Blink Example}]{AVRCode/Part1/PlatformIO_Quick_Start/AVRBlinkSmall.c}
 
-\begin{lstlisting}[language=C,caption={AVRBlinkSmall.c}]
-// This must also be done before anything else.
-#ifndef F_CPU
-#define F_CPU 16000000UL // 16 MHz clock speed
-#endif
-
-#include <avr/io.h>
-#include <util/delay.h>
-
-int main(void)
-{
-  // SETUP goes here.
-  // Makes D13 aka PB5 (PORTB, Pin5) an output pin
-  DDRB = (1 << PB5); 
-
-  // And here is what Arduino calls loop.
-  while(1) //infinite loop
-  {
-    // Toggle on D13 LED.
-    PINB =  (1 << PB5);
-    _delay_ms(1000);
-  }
-}
-\end{lstlisting}
 
 Compiling the above, results in this at the end:
 
@@ -316,45 +313,22 @@ Compiling the above, results in this at the end:
 AVR Memory Usage
 ----------------
 Device: atmega328p
- 
+
 Program:     158 bytes (0.5% Full)
+
 (.text + .data + .bootloader)
- 
+
 Data:          0 bytes (0.0% Full)
 (.data + .bss + .noinit)
 \end{lstlisting}
 
-How much space does Blink take up when compiled in the Arduino IDE? Lets see:
+So, that's another 20 bytes off the total size just by using a trick of the AVR micro controller.
 
-\begin{lstlisting}
-Sketch uses 928 bytes (3%) of program storage space. ....
+The trick? If you write a 1 to a pin configured as output, via the \inline{PINx} register, the pin will toggle each time you write it. This means, to flash an LED 4 times, you would toggle the pin 8 times - once on and once off is a single flash.
 
-Global variables use 9 bytes (0%) of dynamic memory, ....
-\end{lstlisting}
-
-We have a huge saving in such a tiny program. Just out of interest, I compiled the BareMinimum Arduino example, which looks like this:
-
-\begin{lstlisting}[language=C]
-void setup() {
-  // put your setup code here, to run once:
-}
-
-void loop() {
-  // put your main code here, to run repeatedly:
-}
-\end{lstlisting}
-
-And the compiler told me that:
-
-\begin{lstlisting}
-Sketch uses 444 bytes (1%) of program storage space. ....
-
-Global variables use 9 bytes (0%) of dynamic memory, ....
-\end{lstlisting}
-
-So, our blink code, written in AVR C with none of the Arduino wrappings,
-takes up only 40\% of the space used in Flash Memory by a completely
-empty\footnote{More on the reasons why elsewhere.} Arduino sketch!
+\begin{note}
+	You will not be surprised to hear that this is pretty much the last time we will be using the \inline{\_delay\_ms()} functions, unless there's no option, these are classed as ``busy wait'' delays - they burn CPU cycles in a loop to give the desired delays. We need a better method. More on that later, but think \emph{timers}.
+\end{note}
 
 \subsection{Upload to Our Board}\label{upload-to-our-board}
 
@@ -418,7 +392,7 @@ Here are a few configurations for various programmers, taken from the \href{http
 The latter one is used when you have a spare Arduino lying around doing nothing, and you have set it up to be used as an ISP programmer for AVR chips that don't have a bootloader, or simply because you want to! There will be more of this matter soon.
 
 \begin{warning}
-You should also be aware that if you program an Arduino using the ISP programmer, you cannot subsequently use the USB cable until you have burned the bootloader back into the chip. Ask me how I know! The steps to do this are simple:
+You should also be aware that if you program an Arduino using the ISP programmer, you cannot subsequently use the USB cable and bootloader until you have burned the bootloader back into the chip. Ask me how I know! The steps to do this are simple:
 
 \begin{itemize}
 \item Connect your USB cable to the Arduino and to your computer.
@@ -442,10 +416,8 @@ Press F8 if the build information vanishes again.
 You might see the following, on Linux:
 
 \begin{lstlisting}
-Warning! Please install `99-platformio-udev.rules` and check that your 
-board's PID and VID are listed in the rules.
-https://raw.githubusercontent.com/platformio/platformio/
-develop/scripts/99-platformio-udev.rules
+Warning! Please install `99-platformio-udev.rules` and check that your board's PID and VID are listed in the rules.
+https://raw.githubusercontent.com/platformio/platformio/develop/scripts/99-platformio-udev.rules
 \end{lstlisting}
 
 (The filename above is all on one line, I've split it to fit on the page.)
