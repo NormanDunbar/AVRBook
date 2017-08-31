@@ -13,8 +13,9 @@ rem Created 30th June 2017.
 rem Last Modified: 30th June 2017.
 rem
 
-pdflatex AVRBook.tex
-makeindex -s StyleInd.ist AVRBook.idx
-pdflatex AVRBook.tex
-pdflatex AVRBook.tex
+pdflatex -aux-directory=AuxFiles AVRBook.tex
+pdflatex -aux-directory=AuxFiles AVRBook.tex
+makeindex -s StyleInd.ist AuxFiles/AVRBook.idx
+pdflatex -aux-directory=AuxFiles AVRBook.tex
+pdflatex -aux-directory=AuxFiles AVRBook.tex
 
