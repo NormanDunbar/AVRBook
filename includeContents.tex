@@ -12,19 +12,32 @@
 %\mainmatter
 
 \part{PlatformIO}
-\include{Content/Platformio}
+\input{Content/Platformio}
+
 
 \part{The Atmel AVR}
-\include{Content/Avr}
-\include{Content/Timers}
-\include{Content/Interrupts}
-%\include{Content/Serial Communications}
+\input{Content/Avr}
+%\input{Content/Clock} % Clocks & crystals etc
+\input{Content/Timers}
+\input{Content/Interrupts}
+%\input{Content/GPIO} % Digital Inputs & Outputs.
+%\input{Content/PWM} % Analogue Outputs.
+%\input{Content/USART} % Serial Communications
+%\input{Content/ADC}
+%\input{Content/BOD} %Brown Out Detector
+%\input{Content/WDT} %Watch Dog Timer
+%\input{Content/AC} %Analogue Comparator
+%\input{Content/SPI} %Serial Peripheral Interface
+%\input{Content/PowerSleep} %Power and Sleep modes
+%\input{Content/TWI} % Two Wire Interface aka I2C
+
+
+\part{A Worked Example}
 
 
 % All the backend stuff, appendices, indexes etc.
 %\backmatter
 
 \part{Appendices}
-
 \chapterimage{ChapterImage.jpg} % Chapter heading image
 \input{Content/Appendices}

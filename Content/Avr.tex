@@ -91,4 +91,137 @@ The following section goes into greater detail about Pins and Ports.
 
 \section{AVR Ports and Pins}\label{avr-ports-and-pins}
 
-\section{}\label{}
+\subsection{Ports}\label{avr-ports}
+
+The \index{ATmega328P}ATmega328P has three separate ports named B, C and D. Other devices in the AVR family have additional ports, but we are restricted to the three already mentions.
+
+The ports are named, simply enough, ``PORTB'', ``PORTC'' and ``PORTD''. Normally, each port will control up to 8 individual GPIO  pins, but on an Arduino, not all ports have the full set on pins.
+
+A port, internally to the AVR, is simply an 8 bit register/memory address, connected via some complicated electronics, to the physical pins on the outside of the chip.
+
+As far as we AVR and Arduino programmers, are concerned, we have the following ports (and therefore pins) available:
+
+\begin{itemize}
+	\item PORTB bits 0 to 5 = PB0 to PB5 = Arduino pins D8 to D13.
+	\item PORTB bits 6 and 7 = PB6 and PB7. On the Arduino, these are used for the 16Mhz crystal and are not available as GPIO pins. Home brew setups can, if required, run off the micro controller's internal clock, and will be able to use these two pins.
+	\item PORTC bits 0 to 5 = PC0 to PC5 = Arduino analogue pins A0 to A5.
+	\item PORTC bit 6 = PC6 = the reset pin and, while it \emph{can} be fused as a GPIO pin, it is not usually configured in this manner. Doing so also disables the ability to reprogram the chip - unless you have a high voltage programmer. Best avoided!
+	\item PORTD bits 0 to 7 = PD0 to PD7 = Arduino pins D0 to D7.
+\end{itemize}
+
+\subsubsection{Writing to an Output Port}\label{avr-ports-output-writing}
+Writing a binary 1, to a bit in PORTx\footnote{The `x' refers to `B', `C' or `D'.} will set the connected GPIO pin high, if the pin is configured as an output of course. If it is configured as in input, writing a 1 will actually enable the input pullup resistor for  that pin.
+
+\subsection{Pins}\label{avr-pins}
+
+As mentioned above, each port in an AVR micro controller controls up to 8 GPIO pins. 
+
+These GPIO pins can be configured as ``INPUT'', ``INPUT with PULLUP'' or ``OUTPUT''. 
+
+In order to do this, there's a special register named the Data Direction Register, or ``DDR'' for each port. PORTA has DDRA, PORTB has DDRB and so on.
+
+\subsubsection{Output Pins}\label{avr-pins-output}
+In order to configure the pin PB5 (aka Arduino D13) as an output, we set bit 5 to a 1. To configure as an input, we reset bit 5 of DDRB to a zero. You have seen the use of DDRB previously, in listing~\ref{lst-avrblink.c} where we did the following:
+
+\begin{lstlisting}[language=C,numbers={none}]
+	DDRB = (1 << PB5);
+\end{lstlisting}
+
+We could have also done the same thing as follows:
+
+\begin{lstlisting}[language=C,numbers={none}]
+	DDRB = (1 << DDB5);
+\end{lstlisting}
+
+or even:
+
+\begin{lstlisting}[language=C,numbers={none}]
+	DDRB = (1 << PORTB5);
+\end{lstlisting}
+
+This is because when we compile code for an \index{ATmega328P}ATmega328P, there are certain values defined for us, and all of the above are defined as 5. They have different uses, but most AVR code that I've seen, uses the first version above. So I'll (probably) stick with that too. Feel free to use whatever version you are most comfortable with.
+
+\begin{note}
+	In general, if you want to set a bit in a register, or whatever, you can also use the \inline{\_BV} macro. This causes the \emph{compiler} to convert something like \inline{\_BV(5)} into \inline{(1 << 5)} but it is done at compile time so has no overhead at runtime.
+	
+	This means that there's another version of the code above to set bit 5 in DDRB, and that is:
+	
+	\begin{lstlisting}[language=C,numbers={none}]
+		DDRB = _BV{5};	\end{lstlisting}	
+\end{note}	
+
+Of course, every version of the above is slightly incorrect. We do set bit 5 as desired, but we also reset all the other bits. This might affect your device especially as it may have already set some other bits to indicate output pins.
+
+What we should have done is to binary ``OR'' the required pin values into the existing value in the DDR register, as follows:
+
+\begin{lstlisting}[language=C,numbers={none}]
+	DDRB |= (1 << PB5);
+\end{lstlisting}
+
+This will now \emph{only} affect bit 5, all the other bits remain unchanged.
+
+We can set multiple pins as output, in the same command, as follows:
+
+\begin{lstlisting}[language=C,numbers={none}]
+	DDRB |= (1 << PB5)  + (1 << PB3);
+\end{lstlisting}
+
+Which will set pins PB3 and PB5 as outputs without affecting  the other pins.
+
+\subsubsection{Input Pins}\label{avr-pins-input}
+
+So far, we have seen how to set pins as output, equivalent to the \index{Arduino}Arduino's \inline{pinMode(pin, OUTPUT)} command. How then do we set a pin as input?
+
+When the AVR is powered on, or reset, then the default setting for all pins is as input. However, it's best to be explicit. You could do this to set all the pins on PORTB to input mode:
+
+\begin{lstlisting}[language=C,numbers={none}]
+	DDRB = 0;
+\end{lstlisting}
+
+You could, but again, you are possibly reconverting some pins that have been set as outputs, elsewhere in your code. (Ask me how I know!) The best way is simply to binary ``AND'' a zero into the desired pin position, as follows:
+
+\begin{lstlisting}[language=C,numbers={none}]
+	DDRB &= ~(1 << PB5);
+\end{lstlisting}
+
+This creates a value with bit 5 set to a 1, and all other bits reset to zero, then flips it around so that all bits are set to 1 except bit 5. This is then ANDed with the current value in DDRB which has the effect of resetting bit 5 of DDRB to a zero, without affected any other bit.
+
+As above, we can set multiple pins to be inputs quite simply:
+
+\begin{lstlisting}[language=C,numbers={none}]
+	DDRB &= ~((1 << PB5) + (1 << PB3));
+\end{lstlisting}
+
+This will set pins PB3 and PB5 as inputs without affecting other pins.
+
+Ok, I hear you ask, we have output and input using a single bit per pin, so how do we get INPUT\_PULLUP like the \index{Arduino}Arduino?
+
+It was mentioned in passing above, but this is all you have to do:
+
+\begin{itemize}
+	\item Set the pin as an input in the normal manner.
+	\item Write a 1 to the corresponding bit of the pin's PORTx register.
+\end{itemize}
+
+So, to set PB3 to an input, with pullup enabled, all we have to do is this:
+
+\begin{lstlisting}[language=C,numbers={none}]
+	// Configure PB3 as an input pin first.
+	DDRB &= ~(1 << PB3);
+	
+	// Enable the pullup resistor on PB3.
+	PORTB |= (1 << PB3);
+\end{lstlisting}
+
+
+\subsubsection{Reading From an Input Port}\label{avr-ports-input-reading}
+
+To read the value of the pins configured as input, you simply read the value from the PINx\footnote{The `x' refers to `B', `C' or `D'.} register.
+
+If a particular input pin is connected to ground (0 Volts) then the corresponding bit in the PINx register will be a zero. If a pin is connected to a \emph{high} voltage, then it will show a 1 in the corresponding bit of the appropriate PINx register.
+
+Input pins with pullup will, of course, show a 1unless pulled to ground by some external circuitry.
+
+
+
+
