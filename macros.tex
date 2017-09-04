@@ -24,6 +24,11 @@
 \DeclareRobustCommand{\listing}[1]{#1\index{Code Listings!#1}}
 
 %----------------------------------------------------------------------------------------
+% Index a word and add it to the text exactly as it is.
+%----------------------------------------------------------------------------------------
+\DeclareRobustCommand{\indexasis}[1]{#1\index{#1}}
+
+%----------------------------------------------------------------------------------------
 % These generate text in a certain style, see the actual command for details,
 % when used. These do not get indexed.
 %----------------------------------------------------------------------------------------

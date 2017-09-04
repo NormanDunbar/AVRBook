@@ -2,9 +2,9 @@
 
 \section{Introduction}\label{avr-introduction}
 
-The Atmel AVR is the micro controller at the heart of your \index{Arduino}Arduino and comes in many different varieties. We are concentrating, in the main, on the Atmel ATmega328P which is the micro controller on the Duemilanove, the UNO and the Nano - although the Nano uses a surface mount version of the 328.
+The Atmel AVR is the micro controller at the heart of your \indexasis{Arduino} and comes in many different varieties. We are concentrating, in the main, on the Atmel ATmega328P which is the micro controller on the Duemilanove, the UNO and the Nano - although the Nano uses a surface mount version of the 328.
 
-Some clones may also use the surface mounted version of the 328 - it depends. The \index{Arduino}Arduino hardware is open source, so anyone is able to build their own clones, using whatever equivalent micro controllers they can source.
+Some clones may also use the surface mounted version of the 328 - it depends. The \indexasis{Arduino} hardware is open source, so anyone is able to build their own clones, using whatever equivalent micro controllers they can source.
 
 \section{Data Sheets}\label{data-sheets}\index{Data Sheets}
 
@@ -15,10 +15,10 @@ Normally, it's good to get an overview of the micro controller, especially when 
 We will not labour the point here. The data sheet contains all you need to know, and much, much more. 
 
 \section{ATmega328P Pinout}\label{atmega328p-pinout}
-Figure~\ref{fig-atmega328p-pinout}, taken from the current data sheet,  shows details of the ATmega328P's various pins. You will notice that there is no mention of the \index{Arduino}Arduino's pins D0 through D13, nor of pins A0 through A5, so perhaps Figure~\ref{fig-arduino-uno-pinout} will help, as the \index{Arduino}Arduino pin usage is shown in red text down each side of the diagram. (Image courtesy of \href{https://www.arduino.cc/en/Hacking/PinMapping168}{www.arduino.cc})
+Figure~\ref{fig-atmega328p-pinout}, taken from the current data sheet,  shows details of the ATmega328P's various pins. You will notice that there is no mention of the \indexasis{Arduino}'s pins D0 through D13, nor of pins A0 through A5, so perhaps Figure~\ref{fig-arduino-uno-pinout} will help, as the \indexasis{Arduino} pin usage is shown in red text down each side of the diagram. (Image courtesy of \href{https://www.arduino.cc/en/Hacking/PinMapping168}{www.arduino.cc})
 
 \begin{note}
-	You will note that Figure~\ref{fig-arduino-uno-pinout} mentions the \index{ATmega168}ATMega168 rather than the \index{ATmega328P}ATmega328P - don't worry, they are pin compatible. The pins on one micro controller are the same, and have the same functions, as those on the other. They just have different amounts of memory - flash, EEPROM and SRAM.
+	You will note that Figure~\ref{fig-arduino-uno-pinout} mentions the \indexasis{ATmega168} rather than the \indexasis{ATmega328P} - don't worry, they are pin compatible. The pins on one micro controller are the same, and have the same functions, as those on the other. They just have different amounts of memory - flash, EEPROM and SRAM.
 \end{note}	
 
 \begin{figure}[p]
@@ -39,9 +39,9 @@ You may be wondering how, if the AVR pinout diagram shown in Figure~\ref{fig-atm
 
 \section{AVR Pinmodes}\label{avr-pinmodes}
 
-You are most probably familiar with the \index{Arduino}Arduino's \inline{pinMode()} function, which allows you to define whether a pin is to be configured as input, output or input with pullup. You will not be surprised to find out that the AVR has a similar feature, but this one can do many pins at once.
+You are most probably familiar with the \indexasis{Arduino}'s \inline{pinMode()} function, which allows you to define whether a pin is to be configured as input, output or input with pullup. You will not be surprised to find out that the AVR has a similar feature, but this one can do many pins at once.
 
-However, as mentioned above, you may be wondering how the  \index{Arduino}Arduino software gets from the \index{Arduino}Arduino pin numbering format to those used on the actual AVR hardware? The process  as followed by \inline{pinMode()}, is as follows:
+However, as mentioned above, you may be wondering how the  \indexasis{Arduino} software gets from the \indexasis{Arduino} pin numbering format to those used on the actual AVR hardware? The process  as followed by \inline{pinMode()}, is as follows:
 
 \begin{itemize}
 	\item Convert the pin number to a \emph{bit mask} by calling \inline{digitalPinToBitMask()}.
@@ -60,7 +60,7 @@ The functions \inline{digitalPinToBitMask()}, \inline{digitalPinToPort()}, \inli
 
 \fbox{\inline{hardware/avr/cores/arduino/Arduino.h}}
 
-which is located underneath wherever your \index{Arduino}Arduino software is installed. If you ()only) have \index{PlatformIO}PlatformIO installed, then the definitions are in:
+which is located underneath wherever your \indexasis{Arduino} software is installed. If you ()only) have \indexasis{PlatformIO} installed, then the definitions are in:
 
 \fbox{\inline{/home/norman/.platformio/packages/framework-arduinoavr/cores/arduino/Arduino.h}}
 
@@ -79,7 +79,7 @@ So, how does all of the above get us from the pin number 13, for pin D13, for ex
 
 As I said, that's a lot of work, and a lot of code. In addition, there are a number of data tables written to the flash memory, where your program lives, to enable the above function calls to be facilitated. These tables take up $(3 * 10) + (3 * 20)$ or 90 bytes of potentially valuable program space.
 
-That's for the \index{Arduino}Arduino. For plain AVR C code, we set D13 (aka PortB, Pin 5) as follows:
+That's for the \indexasis{Arduino}. For plain AVR C code, we set D13 (aka PortB, Pin 5) as follows:
 
 \begin{lstlisting}[numbers={none}]
 	DDRB |= (1 << 5);
@@ -93,7 +93,7 @@ The following section goes into greater detail about Pins and Ports.
 
 \subsection{Ports}\label{avr-ports}
 
-The \index{ATmega328P}ATmega328P has three separate ports named B, C and D. Other devices in the AVR family have additional ports, but we are restricted to the three already mentions.
+The \indexasis{ATmega328P} has three separate ports named B, C and D. Other devices in the AVR family have additional ports, but we are restricted to the three already mentions.
 
 The ports are named, simply enough, ``PORTB'', ``PORTC'' and ``PORTD''. Normally, each port will control up to 8 individual GPIO  pins, but on an Arduino, not all ports have the full set on pins.
 
@@ -112,6 +112,13 @@ As far as we AVR and Arduino programmers, are concerned, we have the following p
 \subsubsection{Writing to an Output Port}\label{avr-ports-output-writing}
 Writing a binary 1, to a bit in PORTx\footnote{The `x' refers to `B', `C' or `D'.} will set the connected GPIO pin high, if the pin is configured as an output of course. If it is configured as in input, writing a 1 will actually enable the input pullup resistor for  that pin.
 
+\begin{lstlisting}[language=C,numbers={none}]
+	// I want the  LEDs on PB5 to switch on, everything else off.
+	PORTB = (1 << PB5);
+}
+\end{lstlisting}
+
+
 \subsection{Pins}\label{avr-pins}
 
 As mentioned above, each port in an AVR micro controller controls up to 8 GPIO pins. 
@@ -121,7 +128,7 @@ These GPIO pins can be configured as ``INPUT'', ``INPUT with PULLUP'' or ``OUTPU
 In order to do this, there's a special register named the Data Direction Register, or ``DDR'' for each port. PORTA has DDRA, PORTB has DDRB and so on.
 
 \subsubsection{Output Pins}\label{avr-pins-output}
-In order to configure the pin PB5 (aka Arduino D13) as an output, we set bit 5 to a 1. To configure as an input, we reset bit 5 of DDRB to a zero. You have seen the use of DDRB previously, in listing~\ref{lst-avrblink.c} where we did the following:
+In order to configure the pin PB5 (aka \indexasis{Arduino} D13) as an output, we set bit 5 to a 1. To configure as an input, we reset bit 5 of DDRB to a zero. You have seen the use of DDRB previously, in listing~\ref{lst-avrblink.c} where we did the following:
 
 \begin{lstlisting}[language=C,numbers={none}]
 	DDRB = (1 << PB5);
@@ -139,7 +146,7 @@ or even:
 	DDRB = (1 << PORTB5);
 \end{lstlisting}
 
-This is because when we compile code for an \index{ATmega328P}ATmega328P, there are certain values defined for us, and all of the above are defined as 5. They have different uses, but most AVR code that I've seen, uses the first version above. So I'll (probably) stick with that too. Feel free to use whatever version you are most comfortable with.
+This is because when we compile code for an \indexasis{ATmega328P}, there are certain values defined for us, and all of the above are defined as 5. They have different uses, but most AVR code that I've seen, uses the first version above. So I'll (probably) stick with that too. Feel free to use whatever version you are most comfortable with.
 
 \begin{note}
 	In general, if you want to set a bit in a register, or whatever, you can also use the \inline{\_BV} macro. This causes the \emph{compiler} to convert something like \inline{\_BV(5)} into \inline{(1 << 5)} but it is done at compile time so has no overhead at runtime.
@@ -163,14 +170,14 @@ This will now \emph{only} affect bit 5, all the other bits remain unchanged.
 We can set multiple pins as output, in the same command, as follows:
 
 \begin{lstlisting}[language=C,numbers={none}]
-	DDRB |= (1 << PB5)  + (1 << PB3);
+	DDRB |= (1 << PB5)  | (1 << PB3);
 \end{lstlisting}
 
 Which will set pins PB3 and PB5 as outputs without affecting  the other pins.
 
 \subsubsection{Input Pins}\label{avr-pins-input}
 
-So far, we have seen how to set pins as output, equivalent to the \index{Arduino}Arduino's \inline{pinMode(pin, OUTPUT)} command. How then do we set a pin as input?
+So far, we have seen how to set pins as output, equivalent to the \indexasis{Arduino}'s \inline{pinMode(pin, OUTPUT)} command. How then do we set a pin as input?
 
 When the AVR is powered on, or reset, then the default setting for all pins is as input. However, it's best to be explicit. You could do this to set all the pins on PORTB to input mode:
 
@@ -189,12 +196,12 @@ This creates a value with bit 5 set to a 1, and all other bits reset to zero, th
 As above, we can set multiple pins to be inputs quite simply:
 
 \begin{lstlisting}[language=C,numbers={none}]
-	DDRB &= ~((1 << PB5) + (1 << PB3));
+	DDRB &= ~((1 << PB5) | (1 << PB3));
 \end{lstlisting}
 
 This will set pins PB3 and PB5 as inputs without affecting other pins.
 
-Ok, I hear you ask, we have output and input using a single bit per pin, so how do we get INPUT\_PULLUP like the \index{Arduino}Arduino?
+Ok, I hear you ask, we have output and input using a single bit per pin, so how do we get INPUT\_PULLUP like the \indexasis{Arduino}?
 
 It was mentioned in passing above, but this is all you have to do:
 
@@ -216,11 +223,23 @@ So, to set PB3 to an input, with pullup enabled, all we have to do is this:
 
 \subsubsection{Reading From an Input Port}\label{avr-ports-input-reading}
 
-To read the value of the pins configured as input, you simply read the value from the PINx\footnote{The `x' refers to `B', `C' or `D'.} register.
+To read the value of the pins configured as input, you simply read the value from the PINx\footnote{The `x' refers to `B', `C' or `D'.} register, for example:
+
+\begin{lstlisting}[language=C,numbers={none}]
+	uint8_t inputPins = PINB;
+	if (inputPins & (1 << PB5)) {
+		// Do something if pin PB5 is high.
+	}
+\end{lstlisting}
+
 
 If a particular input pin is connected to ground (0 Volts) then the corresponding bit in the PINx register will be a zero. If a pin is connected to a \emph{high} voltage, then it will show a 1 in the corresponding bit of the appropriate PINx register.
 
-Input pins with pullup will, of course, show a 1unless pulled to ground by some external circuitry.
+Input pins with pullup\footnote{% complicated footnote ahead!
+	I don't know about you, but I find it strange that a switch, for example, that is closed, returns a logical zero to the micro controller, rather than a 1 - which to me makes a lot more logical sense. Still, pullups! I would rather configure the pin as an input, with no pullup, and use an external \emph{pulldown} resistor to ground myself. That way, an open switch gives a zero bit in the appropriate PINx register, while a closed switch gives a 1. Or is that just me? 
+	
+	Yes, I \emph{know} that would be an additional cost when lots of pulldown resistors were required, in a commercial product, but I'm not making commercial products, and I have a bucket of resistors to use up!%
+} will, of course, show a 1 unless pulled to ground by some external circuitry.
 
 
 

@@ -13,11 +13,11 @@ There is also a debugger available.
 
 \program{PlatformIO Core}PlatformIO Core is a \emph{command line utility}\footnote{Panic not Windows users, the command line is not your mortal enemy. In fact, you can get stuff done a lot quicker in the command line, \emph{most} of the time. Once you get to know it of course.} which supplied the commands to initialise, create, compile, amend and upload code to your micro controller. 
 
-The \program{PlatformIO IDE}PlatformIO IDE code is available to install into a number of editors and/or IDEs and allows you to use \index{PlatformIO}PlatformIO from within your editor or IDE. This option \emph{does not} require that the Core software be installed already, in fact, the IDE version will install the Core commands into your shell\footnote{Windows users - the shell is the Linux equivalent of your command line.} should you require this.
+The \program{PlatformIO IDE}PlatformIO IDE code is available to install into a number of editors and/or IDEs and allows you to use \indexasis{PlatformIO} from within your editor or IDE. This option \emph{does not} require that the Core software be installed already, in fact, the IDE version will install the Core commands into your shell\footnote{Windows users - the shell is the Linux equivalent of your command line.} should you require this.
 
 We shall be using the IDE option in this book, installed into the \program{Atom Editor}Atom editor.
 
-\index{PlatformIO}PlatformIO allows you to create projects for your  \index{Arduino}Arduino, or, almost any other embedded micro controller that is known to man, woman or hamster! At the time of writing, 5th July 2017, \index{PlatformIO}PlatformIO supported:
+\indexasis{PlatformIO} allows you to create projects for your  \indexasis{Arduino}, or, almost any other embedded micro controller that is known to man, woman or hamster! At the time of writing, 5th July 2017, \indexasis{PlatformIO} supported:
 
 \begin{itemize}
 \item
@@ -34,9 +34,9 @@ We shall be using the IDE option in this book, installed into the \program{Atom 
   8,084 Library Examples
 \end{itemize}
 
-You can use it to replace the  \index{Arduino}Arduino IDE too, if you wish, as it understands plain  \index{Arduino}Arduino code as well as AVR C code.  \index{Arduino}Arduino sketches can be imported unchanged, worked on, compiled and uploaded without any difficulty.
+You can use it to replace the  \indexasis{Arduino} IDE too, if you wish, as it understands plain  \indexasis{Arduino} code as well as AVR C code.  \indexasis{Arduino} sketches can be imported unchanged, worked on, compiled and uploaded without any difficulty.
 
-As mentioned above, \index{PlatformIO}PlatformIO comes in two main flavours:
+As mentioned above, \indexasis{PlatformIO} comes in two main flavours:
 
 \begin{itemize}
 \item
@@ -45,7 +45,7 @@ As mentioned above, \index{PlatformIO}PlatformIO comes in two main flavours:
   An IDE version for the \program{Atom Editor}Atom editor, or Visual Studio. This also allows   you to run the command line commands without having to install that   package separately.
 \end{itemize}
 
-In addition, there's a lot of documentation on the web site about how you can install the \index{PlatformIO}PlatformIO tools into a large number of different IDEs, some of which you may already be using.
+In addition, there's a lot of documentation on the web site about how you can install the \indexasis{PlatformIO} tools into a large number of different IDEs, some of which you may already be using.
 
 \subsection{Installing Atom}\label{installing-atom}
 
@@ -78,20 +78,20 @@ Eventually you will be prompted to restart \program{Atom Editor}Atom, so do so.
 
 If, on the restart, you are prompted to Install Clang go ahead and do so, if you wish, or select \inline{Disable Code Completion}. Clang will have to be installed using your package manager - it's not a package for \program{Atom Editor}Atom but for the entire system. Full details are \href{http://docs.platformio.org/en/latest/ide/atom.html\#ii-clang-for-intelligent-code-completion}{here}.
 
-Full instructions on installing \program{Atom Editor}Atom and \index{PlatformIO}PlatformIO packages can be found \href{http://docs.platformio.org/en/latest/ide/atom.html\#clang-for-intelligent-code-completion}{here}.
+Full instructions on installing \program{Atom Editor}Atom and \indexasis{PlatformIO} packages can be found \href{http://docs.platformio.org/en/latest/ide/atom.html\#clang-for-intelligent-code-completion}{here}.
 
-You will know that you have installed \index{PlatformIO}PlatformIO when you restart \program{Atom Editor}Atom and see a `bug face' looking back at you from the \index{PlatformIO}PlatformIO welcome screen - this is the PlatformIO Home page.
+You will know that you have installed \indexasis{PlatformIO} when you restart \program{Atom Editor}Atom and see a `bug face' looking back at you from the \indexasis{PlatformIO} welcome screen - this is the PlatformIO Home page.
 
 \subsection{Installing Shell Commands}\label{installing-shell-commands}
 
 Should you wish to install the \program{PlatformIO Core}PlatformIO Core commands for your system, then:
 
 \begin{itemize}
-	\item Click the \index{PlatformIO}PlatformIO menu item;
+	\item Click the \indexasis{PlatformIO} menu item;
 	\item Click Install Shell Commands option.
 \end{itemize}
 
-Hopefully, that will all work, however, as it uses the \inline{sudo} command, it \emph{may} fail to execute properly if your version of \inline{sudo} requires a password. However, \index{PlatformIO}PlatformIO helpfully displays the two commands that need to be executed in a shell session to enable the shell commands:
+Hopefully, that will all work, however, as it uses the \inline{sudo} command, it \emph{may} fail to execute properly if your version of \inline{sudo} requires a password. However, \indexasis{PlatformIO} helpfully displays the two commands that need to be executed in a shell session to enable the shell commands:
 
 \begin{lstlisting}[caption={Install PlatformIO Shell Commands Manually}]
 sudo ln -s /home/<yourname>/.platformio/penv/bin/platformio /usr/local/bin/platformio
@@ -99,7 +99,7 @@ sudo ln -s /home/<yourname>/.platformio/penv/bin/platformio /usr/local/bin/platf
 sudo ln -s /home/<yourname>/.platformio/penv/bin/pio /usr/local/bin/pio
 \end{lstlisting}
 
-\emph{Obviously} you will have to replace <your name> as appropriate, but \index{PlatformIO}PlatformIO will display the correct commands for you to type in. When you do enter them, you will have to supply your \inline{sudo} password.
+\emph{Obviously} you will have to replace <your name> as appropriate, but \indexasis{PlatformIO} will display the correct commands for you to type in. When you do enter them, you will have to supply your \inline{sudo} password.
 
 Once complete, you will have two new commands, \inline{pio} and \inline{platformio} - which are both the same, the former is pretty much a shortcut for the latter.
 
@@ -111,7 +111,7 @@ Once complete, you will have two new commands, \inline{pio} and \inline{platform
 
 \subsection{Create the Arduino Blink Project}\label{create-the-arduino-blink-project}
 
-I mentioned previously, somewhere, that \index{PlatformIO}PlatformIO can import plain  \index{Arduino}Arduino projects. In fact, it has quite a number of the  \index{Arduino}Adruino examples available. To start with, we will create the Arduino Blink program - after all, that's where everyone starts, isn't it?
+I mentioned previously, somewhere, that \indexasis{PlatformIO} can import plain  \indexasis{Arduino} projects. In fact, it has quite a number of the  \indexasis{Arduino} examples available. To start with, we will create the Arduino Blink program - after all, that's where everyone starts, isn't it?
 
 Open the \program{Atom Editor}Atom editor, if not already open, and click \inline{PlatformIO$\rightarrow$Project Examples}. You will be notified, on the first occasion, that internet access will be required.
 
@@ -158,9 +158,9 @@ Open the \program{Atom Editor}Atom editor, if not already running, and make sure
 
 If the PlatformIO Home Screen is not visible, click \inline{PlatformIO$\rightarrow$PlatformIO Home} to make it visible.
 
-You must first select a board. As I'm using an Arduino Nano with an \index{ATmega328P}ATmega328P micro controller, for this example, that's what I'll be selecting. You may choose something different.
+You must first select a board. As I'm using an Arduino Nano with an \indexasis{ATmega328P} micro controller, for this example, that's what I'll be selecting. You may choose something different.
 
-You will hopefully notice that when you have selected a board, you get to select another, and another \ldots{}. this is a feature of PlatformIO in that it allows you to use the same source code for multiple boards and/or microcontrollers. This is very nice as I sometimes build for the Nano, the Uno, the Duemilenova and for the stand-alone \index{ATtiny85}ATtiny85 - so I can pretty much use the same code for all of the above. (The \index{ATtiny85}ATtiny85 needs a few \inline{\#define}s to compile the same code though!)
+You will hopefully notice that when you have selected a board, you get to select another, and another \ldots{}. this is a feature of PlatformIO in that it allows you to use the same source code for multiple boards and/or microcontrollers. This is very nice as I sometimes build for the Nano, the Uno, the Duemilenova and for the stand-alone \indexasis{ATtiny85} - so I can pretty much use the same code for all of the above. (The \indexasis{ATtiny85} needs a few \inline{\#define}s to compile the same code though!)
 
 For now, however, let's stick with a single board.
 
@@ -172,12 +172,12 @@ you might want to choose something different, especially if you are on
 Windows!
 
 \begin{note}
-You can obtain the source code, but not the \index{PlatformIO}PlatformIO project files etc, for all the examples in this book from \href{https://github.com/NormanDunbar/AVRBook}{GitHub} - look for the folder named \inline{SourceCode}. The code will be found in the same part and/or chapter as the book.
+You can obtain the source code, but not the \indexasis{PlatformIO} project files etc, for all the examples in this book from \href{https://github.com/NormanDunbar/AVRBook}{GitHub} - look for the folder named \inline{SourceCode}. The code will be found in the same part and/or chapter as the book.
 \end{note}
 
 Click the `Process' button.
 
-The first time \index{PlatformIO}PlatformIO is used, it needs to connect to the internet to install the appropriate tools for the board you have chosen. In the case of the Nano, this is \inline{platform: atmelavr}. Just wait while it does what it needs to do.
+The first time \indexasis{PlatformIO} is used, it needs to connect to the internet to install the appropriate tools for the board you have chosen. In the case of the Nano, this is \inline{platform: atmelavr}. Just wait while it does what it needs to do.
 
 When the processing has completed, the output directory that you chose
 above will be populated by a number of files and directories:
@@ -240,7 +240,7 @@ Program:     178 bytes (0.5% Full)
 Data:          0 bytes (0.0% Full)
 (.data + .bss + .noinit)\end{lstlisting}
 
-You will note, hopefully, that this AVR example code is only using 178 bytes of code, and no data. I make that around one fifth (20\%) of the  \index{Arduino}Arduino example's 937 bytes in total.
+You will note, hopefully, that this AVR example code is only using 178 bytes of code, and no data. I make that around one fifth (20\%) of the  \indexasis{Arduino} example's 937 bytes in total.
 
 You may be wondering why we wrap the setting of \inline{F\_CPU} in the following manner:
 
@@ -250,7 +250,7 @@ You may be wondering why we wrap the setting of \inline{F\_CPU} in the following
 #endif
 \end{lstlisting}
 
-This is because \index{PlatformIO}PlatformIO knows that an Arduino Nano with an \index{ATmega328P}ATmega328P runs with a 16MHz crystal, so it defines the correct speed for us. This is defined in the file:
+This is because \indexasis{PlatformIO} knows that an Arduino Nano with an \indexasis{ATmega328P} runs with a 16MHz crystal, so it defines the correct speed for us. This is defined in the file:
 
 \fbox{\inline{/home/norman/.platformio/packages/framework-arduinoavr/boards.txt}}
 
@@ -306,11 +306,11 @@ The trick? If you write a 1 to a pin configured as output, via the \inline{PINx}
 
 \subsection{Upload to Our Board}\label{upload-to-our-board}
 
-Uploading to the board can be either through a USB cable, as we do with the  \index{Arduino}Arduino software, or, using an ISP programmer and the 6 pins on the  \index{Arduino}Arduino board. Which is best?
+Uploading to the board can be either through a USB cable, as we do with the  \indexasis{Arduino} software, or, using an ISP programmer and the 6 pins on the  \indexasis{Arduino} board. Which is best?
 
-By default, \index{PlatformIO}PlatformIO assumes that you will be using a USB cable, so the file \inline{platformio.ini} is already suitable, and when you come to upload, the desired port will (or should) be detected automatically.
+By default, \indexasis{PlatformIO} assumes that you will be using a USB cable, so the file \inline{platformio.ini} is already suitable, and when you come to upload, the desired port will (or should) be detected automatically.
 
-If you are using an \index{ISP Programmer}ISP programmer instead of the USB cable, then you must update the\\ \inline{platformio.ini} file to tell it which programmer you are using and the protocol. In addition, to upload firmware using an ISP programmer, you need to use \inline{target = program} instead of \inline{target = upload} - which is the default. 
+If you are using an \indexasis{ISP Programmer} instead of the USB cable, then you must update the\\ \inline{platformio.ini} file to tell it which programmer you are using and the protocol. In addition, to upload firmware using an ISP programmer, you need to use \inline{target = program} instead of \inline{target = upload} - which is the default. 
 
 You will need to add \inline{target = program} to your \inline{platformio.ini} file. Don't forget to save it before attempting to upload/program!\footnote{Yes, I forgot!} When you next attempt an upload, you will see the text \inline{target: program} at the very top of the compile/upload listing when you press F8.
 
@@ -363,16 +363,16 @@ Here are a few configurations for various programmers, taken from the \href{http
     upload_speed = 19200
 \end{lstlisting}
 
-The latter one is used when you have a spare  \index{Arduino}Arduino lying around doing nothing, and you have set it up to be used as an ISP programmer for AVR chips that don't have a bootloader, or simply because you want to! There will be more of this matter soon.
+The latter one is used when you have a spare  \indexasis{Arduino} lying around doing nothing, and you have set it up to be used as an ISP programmer for AVR chips that don't have a bootloader, or simply because you want to! There will be more of this matter soon.
 
 \begin{warning}
-You should also be aware that if you \emph{ever} program an  \index{Arduino}Arduino using the \index{ISPProgrammer}ISP programmer, you cannot subsequently use the USB cable and bootloader until you have burned the bootloader back into the chip. Ask me how I know! 
+You should also be aware that if you \emph{ever} program an  \indexasis{Arduino} using the \indexasis{ISP Programmer}, you cannot subsequently use the USB cable and bootloader until you have burned the bootloader back into the chip. Ask me how I know! 
 
 The steps to do this are simple:
 
 \begin{itemize}
-\item Connect your USB cable to the  \index{Arduino}Arduino and to your computer.
-\item Open the  \index{Arduino}Arduino IDE.
+\item Connect your USB cable to the  \indexasis{Arduino} and to your computer.
+\item Open the  \indexasis{Arduino} IDE.
 \item Ensure that your board and port are correctly defined under \inline{tools$\rightarrow$board}.
 \item Ensure that the programmer is set to AVRisp MK II (or AVR isp).
 \item Select \inline{Tools$\rightarrow$Burn bootloader}.
@@ -381,7 +381,7 @@ The steps to do this are simple:
 After a few flashes of the built in LED, the bootloader will have been burned back into the chip. 
 \end{warning}
 
-The first time we do this with an AVR device,  \index{Arduino}Arduino etc, we will need to download the \inline{avrdude} tool. This is what we need to program our device.
+The first time we do this with an AVR device,  \indexasis{Arduino} etc, we will need to download the \inline{avrdude} tool. This is what we need to program our device.
 
 Select \inline{PlatformIO$\rightarrow$upload} and wait\ldots{}
 
