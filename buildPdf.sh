@@ -14,9 +14,14 @@
 # Last Modified: 30th June 2017.
 #
 
-pdflatex -aux-directory=AuxFiles AVRBook.tex
-pdflatex -aux-directory=AuxFiles AVRBook.tex
-makeindex -s StyleInd.ist AuxFiles\AVRBook.idx
-pdflatex -aux-directory=AuxFiles AVRBook.tex
-pdflatex -aux-directory=AuxFiles AVRBook.tex
+pdflatex -output-directory=AuxFiles AVRBook.tex
+pdflatex -output-directory=AuxFiles AVRBook.tex
+makeindex -s StyleInd.ist AuxFiles/AVRBook.idx
+pdflatex -output-directory=AuxFiles AVRBook.tex
+pdflatex -output-directory=AuxFiles AVRBook.tex
+
+if [ -f AuxFiles/AVRBook.pdf ]
+then
+    cp AuxFiles/AVRBook.pdf ./
+fi
 
