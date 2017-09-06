@@ -184,25 +184,15 @@ above will be populated by a number of files and directories:
 
 \begin{itemize}
 \item
-  A directory named \inline{lib} and a file, \inline{readme.txt} within.
-  The README file has all the information you will need if you intend to
-  write some libraries for this particular project. The source code for
-  the libraries should be kept in this directory - with a separate directory for each separate library.
+  A directory named \inline{lib} and a file, \inline{readme.txt} within.   The README file has all the information you will need if you intend to   write some libraries for this particular project. The source code for   the libraries should be kept in this directory - with a separate directory for each separate library.
 \item
-  A directory named \inline{src}. This is where you will create your own
-  project's source code.
+  A directory named \inline{src}. This is where you will create your own   project's source code.
 \item
-  A file named \inline{.gitignore}. This (hidden on Linux) file tells git, if in use for
-  version control, to ignore a number of files that are not required in
-  normal circumstances, usually files that can be recreated at will.
+  A file named \inline{.gitignore}. This hidden file on Linux tells git, if git is in use for   version control, to ignore a number of files that are not required in   normal circumstances, usually files that can be recreated at will.
 \item
-  A file named \inline{.travis.yml}. This (hidden on Linux) file is a YAML source file that
-  tells the Travis `Continuous Integration' system what to do whenever
-  something in the project changes. We will not be using this feature.
+  A file named \inline{.travis.yml}. This hidden file on Linux is a YAML source file that   tells the Travis `Continuous Integration' system what to do whenever   something in the project changes. We will not be using this feature.
 \item
-  A file named \inline{platformio.ini}. This file tells PlatformIO how the
-  project will be built and uploaded to the microcontroller, for each
-  board you selected when creating the project.
+  A file named \inline{platformio.ini}. This file tells PlatformIO how the   project will be built and uploaded to the microcontroller, for each   board you selected when creating the project. 
 \end{itemize}
 
 \subsection{Write the Blink Code}\label{write-the-blink-code}
@@ -211,22 +201,16 @@ Now we have our project (AVRBlink) created, we need to write some code, so:
 
 \begin{itemize}
 \item
-  Right-click the \inline{src} folder in the \inline{Project} tab, and select
-  \inline{New File} from the context menu that appears.
+  Right-click the \inline{src} folder in the \inline{Project} tab, and select   \inline{New File} from the context menu that appears.
 \item
-  Enter the file name when prompted, I chose \inline{AVRBlink.c}, but you can name
-  the file as you wish.
+  Enter the file name when prompted, I chose \inline{AVRBlink.c}, but you can name   the file as you wish.
 \end{itemize}
 
-The new file opens in the editor, so add the following code:\listing{AVRBlink.c}
+The new file opens in the editor, so add the following  code:\listing{AVRBlink.c}
 
 \lstinputlisting[language=C,caption={AVRBlink.c - AVR Blink Example},label={lst-avrblink.c}]{AVRCode/Part1/PlatformIO_Quick_Start/AVRBlink.c}
 
-Save the file, \inline{File$\rightarrow$Save} or \inline{Ctrl-S}, then select
-\inline{PlatformIO$\rightarrow$Build} or \inline{Ctrl-Alt-B} to build the program. The
-compiler messages will appear, and then vanish after a couple of
-seconds. Click \inline{PlatformIO$\rightarrow$Toggle Build Panel} or press F8
-to display them again.
+Save the file, \inline{File$\rightarrow$Save} or \inline{Ctrl-S}, then select \inline{PlatformIO$\rightarrow$Build} or \inline{Ctrl-Alt-B} to build the program. The compiler messages will appear, and then vanish after a couple of seconds. Click \inline{PlatformIO$\rightarrow$Toggle Build Panel} or press F8 to display them again.
 
 \begin{lstlisting}[numbers={none},caption={AVR Blink Memory Usage}]
 AVR Memory Usage
@@ -318,49 +302,49 @@ You will need to add \inline{target = program} to your \inline{platformio.ini} f
 Here are a few configurations for various programmers, taken from the \href{http://docs.platformio.org/en/latest/platforms/atmelavr.html?highlight=usbtiny#upload-using-programmer}{PlatformIO docs}. Add the following lines to your \inline{platformio.ini} file for the corresponding programmer:
 
 \begin{lstlisting}[caption={The \inline{platformio.ini} additions for `AVRISP' ISP Programmer}]
-    upload_protocol = stk500v1
-    upload_flags = -P$UPLOAD_PORT
+upload_protocol = stk500v1
+upload_flags = -P$UPLOAD_PORT
 
-    ; edit this line with valid upload port
-    upload_port = SERIAL_PORT_HERE
+; edit this line with valid upload port
+upload_port = SERIAL_PORT_HERE
 \end{lstlisting}
 
 
 \begin{lstlisting}[caption={The \inline{platformio.ini} additions for `AVRISP MkII' Programmer}]
-    upload_protocol = stk500v2
-    upload_flags = -Pusb
+upload_protocol = stk500v2
+upload_flags = -Pusb
 \end{lstlisting}
 
 
 \begin{lstlisting}[caption={The \inline{platformio.ini} additions for `USBTinyISP' Programmer}]
-    upload_protocol = usbtiny
+upload_protocol = usbtiny
 \end{lstlisting}
 
 
 \begin{lstlisting}[caption={The \inline{platformio.ini} additions for `ArduinoISP` Programmer}]
-    upload_protocol = arduinoisp
+upload_protocol = arduinoisp
 \end{lstlisting}
 
 
 \begin{lstlisting}[caption={The \inline{platformio.ini} additions for `USBasp' ISP Programmer}]
-    upload_protocol = usbasp
-    upload_flags = -Pusb
+upload_protocol = usbasp
+upload_flags = -Pusb
 \end{lstlisting}
 
 
 \begin{lstlisting}[caption={The \inline{platformio.ini} additions for `Parallel Port' ISP Programmer}]
-    upload_protocol = dapa
-    upload_flags = -F
+upload_protocol = dapa
+upload_flags = -F
 \end{lstlisting}
 
 
 \begin{lstlisting}[caption={The \inline{platformio.ini} additions for `Arduino as ISP` Programmer}]
-    upload_protocol = stk500v1
-    upload_flags = -P$UPLOAD_PORT -b$UPLOAD_SPEED
+upload_protocol = stk500v1
+upload_flags = -P$UPLOAD_PORT -b$UPLOAD_SPEED
 
-    ; edit these lines
-    upload_port = SERIAL_PORT_HERE
-    upload_speed = 19200
+; edit these lines
+upload_port = SERIAL_PORT_HERE
+upload_speed = 19200
 \end{lstlisting}
 
 The latter one is used when you have a spare  \indexasis{Arduino} lying around doing nothing, and you have set it up to be used as an ISP programmer for AVR chips that don't have a bootloader, or simply because you want to! There will be more of this matter soon.

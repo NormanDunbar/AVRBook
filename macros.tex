@@ -35,6 +35,11 @@
 \DeclareRobustCommand{\opcode}[1]{\texttt{#1}}
 \DeclareRobustCommand{\inline}[1]{\texttt{#1}}
 
+%----------------------------------------------------------------------------------------
+% Set up a \refernce{} command. It will generate "section n.n Section Title on page nn"
+%----------------------------------------------------------------------------------------
+
+\DeclareRobustCommand{\reference}[1]{\autoref{#1} \nameref{#1} on page~\pageref{#1}}
 
 
 %----------------------------------------------------------------------------------------

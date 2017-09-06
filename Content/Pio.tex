@@ -1,0 +1,248 @@
+\chapter{Using the PlatformIO Command Line}\label{using-the-platformio-command-line}
+
+\section{PIO Introduction}\label{pio-introduction}
+
+Windows users, look away now! Only kidding, it's not that bad, honest. 
+
+If you have your own favourite editor, then there's nothing stopping you from using it to create and edit your AVR code, You should either have downloaded and installed the command line version of \indexasis{PlatformIO Core}, or, installed the \indexasis{PlatformIO IDE} and then chosen the option to install the command line commands into your system, as described in \reference{installing-shell-commands}. 
+
+Once installed, whichever method you choose, there are two new commands available, \inline{platformio} or \inline{pio}. They are both the same, and to save wearing out my keyboard, I shall only be using the latter!
+
+\section{Creating a New Project}\label{creating-a-new-project}
+
+\subsection{Finding Our Micro Controller}\label{finding-our-micro-controller}
+
+To create a new project, we need to know where our code will be stored, and which micro controller(s) we wish to use. If we assume that we are using an \indexasis{Arduino} nano, with an \indexasis{ATmega328P} micro controller, then we can find out what we need to use to indicate this when we create the new project. The command:
+
+\begin{lstlisting}[language={bash},numbers={none},caption={PIO - Listing Supported Boards}]
+pio boards
+\end{lstlisting}
+
+will list all known boards that are supported. As there are quite a few, we should attempt to reduce the amount of output by filtering through \inline{grep} (Linux users) or \inline{find} if we are on Windows:
+
+\begin{lstlisting}[language={bash},numbers={none},caption={Linux - PIO - Listing Arduino Nano Boards}]
+pio boards | grep -i nano 
+\end{lstlisting}    
+
+The output from the above will resemble the following. The headings will not be included in the output however, I have added those for clarity.
+
+\begin{lstlisting}[numbers={none},caption={PIO - List of Arduino Nano Boards}]
+ID                MCU         Frequency ....
+nanoatmega168     ATMEGA168   16Mhz     ....
+nanoatmega328     ATMEGA328P  16Mhz     ....
+nano32            ESP32       240Mhz    ....
+redBearLabBLENano NRF51822    16Mhz     ....
+redbear_blenano2  NRF52832    64Mhz     ....
+\end{lstlisting}    
+
+A similar output will be displayed on windows with the following command:
+
+\begin{lstlisting}[language={bash},numbers={none},caption={Windows - PIO - Listing Arduino Nano Boards}]
+pio boards | find /i "nano" 
+\end{lstlisting}    
+
+The first column is the id code that we are interested in when we wish to initialise a new project. As we are looking for an \indexasis{Arduino} Nano with an \indexasis{ATmega328P} micro controller, then the second entry looks most promising - it lists the micro controller (MCU) as an ATMEGA328P running at 16MHz, this is definitely what we are looking for. We should note the board id in the first column.
+
+
+\subsection{Initialise the New Project}\label{initialise-the-new-project}
+
+We are now ready to initialise a new project for our Nano. We do need to create a new directory for the project, as the initialisation assumes that the project directory exists. Once created we can initialise the new project:
+
+\begin{lstlisting}[language={bash},numbers={none},caption={PIO - Initialising a New Project}]
+mkdir Nano328P
+pio init --project-dir Nano328P --board nanoatmega328
+\end{lstlisting}    
+    
+
+The command will output the following when it has completed the initialisation:
+
+\begin{lstlisting}[numbers={none},caption={PIO - New Project Initialisation Complete}]
+The next files/directories have been created in /SourceCode/Nano328P
+platformio.ini - Project Configuration File
+src - Put your source files here
+lib - Put here project specific (private) libraries
+
+Project has been successfully initialized!
+Useful commands:
+`platformio run` Process/build project from the current directory
+`platformio run --target upload` Upload firmware to embedded board
+`platformio run --target clean` Clean project (remove compiled files)
+`platformio run --help` Additional information
+`platformio run --target program` Upload firmware with ISP Programmer
+\end{lstlisting}    
+
+\begin{note}
+Actually, the output from the initialisation \emph{does not} mention that you might like to program the AVR with an \indexasis{ISP Programmer}, rather than the normal \indexasis{Arduino} style USB cable. I have added that as an additional useful command as I use both methods of uploading to my AVRs. (The last line above is the one I added.)
+\end{note}
+
+Now we can check the contents of the project directory, to see what has been created:
+
+\begin{lstlisting}[language={bash},numbers={none},caption={PIO - Checking New Project Initialisation}]
+ls Nano328P
+\end{lstlisting}    
+    
+\begin{lstlisting}[numbers={none},caption={PIO - Checking New Project Initialisation - Result}]
+lib  platformio.ini  src
+\end{lstlisting}    
+
+
+\subsection{Creating the Source Code}\label{creating-the-source-code}
+
+To create the source code, we would change into the newly initialised directory, and start editing with our favourite editor. 
+
+\begin{lstlisting}[language={bash},numbers={none},caption={PIO - Creating New Project Source Files}]
+cd Nano328P/src
+vi AVRSmallBlink.c
+...
+\end{lstlisting}    
+
+To compile the code, we need to be back up one level in the project's main directory:
+
+\begin{lstlisting}[language={bash},numbers={none},caption={PIO - Compiling the New Project}]
+cd ..
+pio run 
+\end{lstlisting}    
+
+\begin{lstlisting}[numbers={none},caption={PIO - Compiling the New Project - Output}]
+[Wed Sep  6 12:31:46 2017] Processing nanoatmega328 (platform: atmelavr; board: nanoatmega328; framework: arduino)
+...
+Looking for dependencies...
+No dependencies
+Compiling .pioenvs/nanoatmega328/src/AVRSmallBlink.o
+Archiving .pioenvs/nanoatmega328/libFrameworkArduinoVariant.a
+Indexing .pioenvs/nanoatmega328/libFrameworkArduinoVariant.a
+Compiling .pioenvs/nanoatmega328/FrameworkArduino/CDC.o
+...
+Archiving .pioenvs/nanoatmega328/libFrameworkArduino.a
+Indexing .pioenvs/nanoatmega328/libFrameworkArduino.a
+Linking .pioenvs/nanoatmega328/firmware.elf
+Calculating size .pioenvs/nanoatmega328/firmware.elf
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:     158 bytes (0.5% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+Building .pioenvs/nanoatmega328/firmware.hex
+\end{lstlisting} 
+
+The first time a project is built, there's a number of files to be compiled in addition to the main source file(s) that we created, so there's quite a lot of output on screen. Subsequent builds don't produce as much output. (Unless you have cleaned things out of course - see below.)
+
+
+\subsection{Uploading the Firmware}\label{uploading-the-firmware}
+
+To upload the compiled firmware file to the Nano, using the USB cable in the normal manner, proceed as follows:
+
+\begin{lstlisting}[language={bash},numbers={none},caption={PIO - Uploading the Firmware}]
+pio run --target upload
+\end{lstlisting}    
+
+The output from the above will resemble this:
+
+\begin{lstlisting}[numbers={none},caption={PIO - Uploading the Firmware - Output}]
+<<< STUFF TO GO HERE >>>
+\end{lstlisting}
+
+Alternatively, if you are using one, the commands to upload the code to the Nano using the \indexasis{ISP Programmer}, is as follows and assumes you have set up the \inline{platformio.ini} file as explained in \reference{upload-to-our-board}.
+
+\begin{lstlisting}[language={bash},numbers={none},caption={PIO - Programming the Firmware with the ISP Programmer}]
+pio run --target program
+\end{lstlisting}    
+
+The output from the above will resemble this:
+
+\begin{lstlisting}[numbers={none},caption={PIO - Programming the Firmware - Output}]
+<<< STUFF TO GO HERE >>>
+\end{lstlisting}
+
+
+\subsection{Cleaning up After the Build}\label{cleaning-up-after-the-build}
+
+Cleaning out the workfiles etc left behind by the compiler, and returning your project directory to a pristine conddition, containing only \emph{our} source files, is as simple as:
+
+\begin{lstlisting}[language={bash},numbers={none},caption={PIO - Project Cleaning}]
+pio run --target clean
+\end{lstlisting}    
+
+The output from the \inline{clean} command will be similar to the following:
+
+\begin{lstlisting}[numbers={none},caption={PIO - Project Cleaning - Results}]
+[Wed Sep  6 12:35:55 2017] Processing nanoatmega328 (platform: atmelavr; board: nanoatmega328; framework: arduino)
+...
+Removed .pioenvs/nanoatmega328/libFrameworkArduinoVariant.a
+Removed .pioenvs/nanoatmega328/libFrameworkArduino.a
+...
+Removed .pioenvs/nanoatmega328/FrameworkArduino/wiring_pulse.o
+Removed .pioenvs/nanoatmega328/FrameworkArduino/wiring_shift.o
+Done cleaning
+\end{lstlisting}    
+
+\section{Getting Help}\label{section-getting-help}
+
+The various commands allowed by the \inline{pio} utility are easily obtained:
+
+\begin{lstlisting}[language={bash},numbers={none},caption={PIO - Getting Help}]
+pio --help
+
+Usage: pio [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --version          Show the version and exit.
+  -f, --force        Force to accept any confirmation prompts.
+  -c, --caller TEXT  Caller ID (service).
+  -h, --help         Show this message and exit.
+
+Commands:
+  account   Manage PIO Account
+  boards    Embedded Board Explorer
+  ci        Continuous Integration
+  debug     PIO Unified Debugger
+  device    Monitor device or list existing
+  home      PIO Home
+  init      Initialize PlatformIO project or update existing
+  lib       Library Manager
+  platform  Platform Manager
+  remote    PIO Remote
+  run       Process project environments
+  settings  Manage PlatformIO settings
+  test      Local Unit Testing
+  update    Update installed platforms, packages and libraries
+  upgrade   Upgrade PlatformIO to the latest version
+\end{lstlisting}    
+
+And help for the individual commands listed can be obtained as follows:
+
+\begin{lstlisting}[language={bash},numbers={none},caption={PIO - Getting Help on Commands}]
+pio <command> --help
+\end{lstlisting}    
+
+For example:
+
+\begin{lstlisting}[language={bash},numbers={none},caption={PIO - Getting Help on Commands}]
+pio account --help
+\end{lstlisting}
+
+Which would result in:
+
+\begin{lstlisting}[numbers={none},caption={PIO - Getting Command Help}]
+Usage: pio account [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  -h, --help  Show this message and exit.
+
+Commands:
+  forgot    Forgot password
+  login     Log in to PIO Account
+  logout    Log out of PIO Account
+  password  Change password
+  register  Create new PIO Account
+  show      PIO Account information
+  token     Get or regenerate Authentication Token
+\end{lstlisting}
+
+
+
