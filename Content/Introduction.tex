@@ -1,4 +1,4 @@
-\section*{Introduction}\label{introduction}
+\chapter{Introduction}\label{introduction}
 
 This book is for those of us who have played with, and perhaps mastered, the \indexasis{Arduino} in its various forms, and who need now to move up to programming it - or home made clones on breadboards or stripboard (or even, home made PCBs) and so on - in AVR specific C code.
 
@@ -6,37 +6,67 @@ This need could be for many reasons, running out of space, too slow, lots of hid
 
 This book should help with that migration. It's not difficult, but it's not completely easy either. You will have to think a lot more at the hardware level, which the  \indexasis{Arduino} environment abstracts away for you, to make it simple.
 
-There are three, that I know of anyway, levels of abstraction or interaction with the AVR micro controller in your Arduino:
+There are four, that I know of anyway, levels of abstraction or interaction with the AVR micro controller in your \indexasis{Arduino}:
 
 \begin{itemize}
-	\item The Arduino IDE \& language. This sits on top of the the avr-lib functions and is ideal for beginners.
-	\item The avr-lib libraries. These sit on top of the underlying raw AVR code and are ideal for middling to skilled Arduinoists\footnote{Yes, I made up that word!}. 
+	\item The \indexasis{Arduino IDE} \& language. This sits on top of the \inline{avr-lib} functions and is ideal for beginners.
+	\item The \inline{avr-lib} libraries. These sit on top of the underlying raw AVR code and are ideal for middling to skilled Arduinoists\footnote{Yes, I made up that word!}. 
 	\item Raw AVR code. This is what the data sheets cover and explain in gory detail - which registers to set, which bits in said registers need to be set or unset, how and when they should be set/unset etc etc - it makes for a lot of bedtime reading!
+	\item AVR assembly language. About as low as we can go. Best avoided! However, I \emph{might} show you a quick demonstration of it later, maybe!
 \end{itemize}
 
-This book deals, in the main, with the middle level of abstraction, the AVR-lib code and functions. Where necessary, however, I might have to dip into the lower level ``stuff'' when there's really no alternative.
+This book deals, in the main, with the middle level of abstraction, the \inline{avr-lib} code and functions. Where necessary, however, I might have to dip into the lower level ``stuff'' when there's really no alternative - but not the assembly language, not just yet!
 
-Interrupts, timers and sleep modes will figure largely in what we do with AVR programming - we don't want to be wasting time waiting for someone to press a switch, or a sensor to register a reading, for example. And if there's nothing for the AVR to do while it waits around, we let it sleep! This saves power and could mean the difference between your project being able to run for months, if not years, on a couple of batteries, and having to be constantly plugged into the mains.
+\nameref{avr-interrupts} (on page~\pageref{avr-interrupts}), \nameref{avr-timers} (on page~\pageref{avr-timers}) and \nameref{avr-sleep-modes} (on page~\pageref{avr-sleep-modes}) will figure largely in what we do with AVR programming. There's no point wasting time, CPU cycles and power waiting for someone to press a switch, or for a sensor to register a reading, for example, when we could be doing something useful. And if there's nothing for the AVR to do while it waits around, we let it sleep. This saves power and could mean the difference between your project being able to run for months, if not years, on a couple of batteries, and having to be constantly plugged into the mains.
 
-Just remember, \inline{delay()} is not your best friend when programming the  \indexasis{Arduino} or the AVR. Hopefully, you will find this out later when you read on.
+Just remember, \inline{delay()} is \emph{not} your best friend when programming the  \indexasis{Arduino} or the AVR. Hopefully, you will find this out later when you read on.
 
-\subsection*{Hardware Necessary}\label{hardware-necessary}
+\subsection{Hardware Necessary}\label{hardware-necessary}
 
-\begin{itemize}
-\item
-  An  \indexasis{Arduino}, perhaps. It's not essential, but you can use one to program bare AVR micro controllers - those you buy without a bootloader -   if you don't have a ISP programmer.
-  
-  A \emph{Nano} or \emph{Uno} etc are probably best. The \emph{Mega} is perhaps a tad overkill as an ISP programmer!
-\item
-  If you don't have a spare  \indexasis{Arduino} lying around, then you might want an \indexasis{ISP Programmer}. You don't \emph{need} one as the standard  \indexasis{Arduino} method of programming over the USB cable will still work.
-  
-  I got mine on eBay for around £3.28 including postage, from a seller named finetech007, in China. Other suppliers are available. The programmer allows you to save the 2Kb that an  \indexasis{Arduino} bootloader takes up, but obviously stops you programming the device using that bootloader, over the normal USB cable.
+It is assumed that you have some form of \indexasis{Arduino}. This is the test bed upon which we will operate. I'm using a Nano, an Uno, a Duemilanove and, maybe, a Mega. I also have a couple that I build myself on breadboards, strip-board and I'm designing my own PCB for future projects. Most of the time, however, I'll be running my code on the Nano - it's small enough to sit on my desktop and not get too much in the way when I'm typing!
 
-  Don't worry if you don't have an \indexasis{ISP Programmer}, as mentioned above, your existing  \indexasis{Arduino} can be used to program (other) AVR   micro-controllers. And if you don't have an  \indexasis{Arduino}, why not build your own? Grab hold of a \href{http://start.shrimping.it/project/protected/build.html}{Protected Shrimp} kit for around £10.00\footnote{Prices correct at the time of writing.}, or a more permanent (some soldering required) \href{http://start.shrimping.it/kit/stripboard.html}{Copper Shrimp} add on kit for £1.90 from those nice people at \href{http://start.shrimping.it//index.html}{ShrimpingIT}. I started with an Arduino Duemilanove which was bought for me as a gift, but I built my own Shrimp Kit just for the fun of it. I've built a few more since then!
-\item
-  A breadboard and assorted components, wires, etc. This is limited to the odd switch, LED and such like. Maybe a shift register or two will be handy - it depends on what you are expecting to achieve with the   AVR. (Or, what I decide to include in the book!)
-\end{itemize}
+It is also assumed that you have installed the \indexasis{Arduino} IDE and that you are happy with using it to upload sketches to your own particular device. If not, then this book is not really for you I suspect.
 
-\subsection*{Coming Up}\label{coming-up}
+You \emph{may} be using an \indexasis{ISP Programmer} of some kind to upload the compiled code. This is acceptable and in fact, I do it too from time to time.
 
-\textbf{To be continued ...}
+I got my programmer on Ebay\footnote{Other online auction sites are available!} for around £3.20 including postage, from a seller named \href{http://stores.ebay.co.uk/finetech007}{finetech007}, in China. Other suppliers are available as well so shop around. Mine works fine now - I did have to fiddle with a multi-meter to determine which cable in the wiring loom\footnote{If 6 wires can be called a wiring \emph{loom}!} was ground. I marked the cable using a black permanent marker pen to show the ground wire\footnote{Only because I didn't have a red marker to show the VCC wire!}.
+
+Using a programmer allows you to save the 2Kb of Flash Memory that an  \indexasis{Arduino} bootloader takes up, but obviously stops you programming the device using the bootloader, over the normal USB cable.
+
+\begin{note}
+	If you ever program the micro controller using the \indexasis{ISP Programmer} then you will automatically overwrite the bootloader and thus, prevent the device from ever being programmed from the \indexasis{Arduino} IDE in the normal manner.
+	
+	Don't panic, this is reversible. Just use the \indexasis{Arduino} IDE and the \indexasis{ISP Programmer} to burn the bootloader (It's an option in the IDE under the \inline{Tools} menu.) Reversing this is covered later on page~\pageref{reburn-the-bootloader}.
+\end{note}	
+
+A small collection of breadboards, resistors, LEDs (there's always room for flashing lights!), switches, transistors, diodes etc - as and when necessary, I'll show a Bill of Materials for any circuits that we build. There won't be much, if any, specialised components necessary - I'm not that clever! Wires too, I suppose.
+
+\subsection{Optional Stuff}\label{optional-stuff}
+
+If you don't have a spare  \indexasis{Arduino} lying around, then you might want an \indexasis{ISP Programmer}. You don't \emph{need} one as the standard  \indexasis{Arduino} method of programming over the USB cable will still work.
+
+If you do have a spare \indexasis{Arduino} then you \emph{might} like to convert it into an \indexasis{ISP Programmer} but if the normal manner of using the USB cable works for you, and the code that you require to upload doesn't fill the memory, then using the USB cable, and the built in \indexasis{Arduino} bootloader, will suffice. You can read all about using your spare micro controller as a programmer in \nameref{using-an-arduino-as-an-isp-programmer} in the appendices on page~\pageref{using-an-arduino-as-an-isp-programmer}.
+
+If you don't have an \indexasis{Arduino}, why not build your own? Grab hold of a \href{http://start.shrimping.it/project/protected/build.html}{Protected Shrimp} kit for around £10.00\footnote{Prices correct at the time of writing.}, or a more permanent (some soldering required) \href{http://start.shrimping.it/kit/stripboard.html}{Copper Shrimp} add on kit for £1.90 from those nice people at \href{http://start.shrimping.it//index.html}{ShrimpingIT}. 
+
+There's nothing to stop you getting hold of a cheap \indexasis{Arduino} clone from China on any one of a number of online auction sites, I have one myself, but buyer beware - there are plenty of non-working ones out there and little in the way of after sales support.
+
+I started with an \indexasis{Arduino} Duemilanove which was bought for me as a gift, but I built my own Shrimp Kit just for the fun of it. I've built a few more since then!
+
+\section{The Workflow}\label{the-workflow}  
+
+In the \nameref{part-platformio} part of this book, we will start by obtaining, installing and setting up the \indexasis{PlatformIO} software. This is what we will be using to compile our code, and to program our devices. 
+
+Using this application is free (or, you can make a donation if you like it a lot) and replaces the \indexasis{Arduino} IDE with a new system that allows you to use your favourite editor, or a number of freely available, or commercial, IDEs, or stand-alone in a command shell.
+
+There are two parts to \indexasis{PlatformIO} - the IDE and the shell commands. We will be taking a look at both.
+
+In \nameref{part-atmel-avr} part of the book we will be taking a closer look at the Atmel AVR micro controller used in the Uno, Nano etc, the \indexasis{ATmega328P}. 
+
+In this part we will look into the use of the avr-lib libraries, installed by \indexasis{Arduino} IDE and also by \indexasis{PlatformIO} as required, and how they can be put to good use in our own code, without the \indexasis{Arduino} language coming between us and the libraries.
+
+This will help make our programs smaller and more efficient, and could be what we need to avoid having to invest in a bigger AVR micro controller to get the amount of memory we need to upload our code.
+
+In \nameref{part-worked-example} we will look at taking a freely available \indexasis{Arduino} sketch, of some complexity, and converting it to use the avr-libs, and the techniques we learned in \nameref{part-atmel-avr}. We should end up with much smaller code for our micro controller. With a bit of luck, it will be less power hungry as well, and might be able to run off batteries!
+
+And finally, in the \nameref{part-appendices} we will cover a few more interesting subjects, such as how we can set up a spare \indexasis{Arduino} to act as if it were an \indexasis{ISP Programmer} which we can use to program other AVR micro controllers such as the \indexasis{ATtiny85}, for example, which doesn't have the ability to be programmed using the USB cable that we know and love.

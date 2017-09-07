@@ -56,18 +56,14 @@ However, as mentioned above, you may be wondering how the  \indexasis{Arduino} s
 
 That's an awful lot of work just to set a pin as OUTPUT, for example.
 
-The functions \inline{digitalPinToBitMask()}, \inline{digitalPinToPort()}, \inline{portModeRegister()} and \inline{portOutputRegister()} are defined in the file:
+The functions \inline{digitalPinToBitMask()}, \inline{digitalPinToPort()}, \inline{portModeRegister()} and \inline{portOutputRegister()} are defined in the file \path{hardware/avr/cores/arduino/Arduino.h}.
 
-\fbox{\inline{hardware/avr/cores/arduino/Arduino.h}}
-
-which is located underneath wherever your \indexasis{Arduino} software is installed. If you ()only) have \indexasis{PlatformIO} installed, then the definitions are in:
-
-\fbox{\inline{/home/norman/.platformio/packages/framework-arduinoavr/cores/arduino/Arduino.h}}
+which is located underneath wherever your \indexasis{Arduino} software is installed. If you ()only) have \indexasis{PlatformIO} installed, then the definitions are in: \path{/home/norman/.platformio/packages/framework-arduinoavr/cores/arduino/Arduino.h}.
 
 So, how does all of the above get us from the pin number 13, for pin D13, for example, to PB5? Well, the next section explains Ports and Pins, but briefly, calling \inline{pinMode(13, OUTPUT)} does all of the following:
 
 \begin{itemize}
-	\item \inline{digitalPinToBitMask(13)} returns a binary value of 0010 000, which is an 8 bit value, with bit 5 set to 1 and all other bits set to 0.
+	\item \inline{digitalPinToBitMask(13)} returns a binary value of 0010 0000, which is an 8 bit value, with bit 5 set to 1 and all other bits set to 0.
 	\item \inline{digitalPinToPort(13)} returns the value 2, which is defined as a constant named ``PB''.
 	\item \inline{portModeRegister(PB)} returns a pointer, this is C code remember, to the ``DDRB'' register. More on this in the following section.
 	\item \inline{portOutputRegister(PB)} returns a pointer to ``PORTB''. More below on this too.

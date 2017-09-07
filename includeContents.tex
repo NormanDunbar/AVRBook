@@ -11,16 +11,17 @@
 % The main meat of the book begins here.
 %\mainmatter
 
-\part{PlatformIO}
+\part{PlatformIO}\label{part-platformio}
 \input{Content/Platformio}
 \input{Content/Pio}
 
 
-\part{The Atmel AVR}
+\part{The Atmel AVR}\label{part-atmel-avr}
 \input{Content/Avr}
 %\input{Content/Clock} % Clocks & crystals etc
 \input{Content/Timers}
 \input{Content/Interrupts}
+\input{Content/SleepModes}
 %\input{Content/GPIO} % Digital Inputs & Outputs.
 %\input{Content/PWM} % Analogue Outputs.
 %\input{Content/USART} % Serial Communications
@@ -33,12 +34,13 @@
 %\input{Content/TWI} % Two Wire Interface aka I2C
 
 
-\part{A Worked Example}
+\part{A Worked Example}\label{part-worked-example}
 
 
 % All the backend stuff, appendices, indexes etc.
 %\backmatter
 
-\part{Appendices}
+\part{Appendices}\label{part-appendices}
 \chapterimage{ChapterImage.jpg} % Chapter heading image
 \input{Content/Appendices}
+\input{Content/ArduinoISP}
