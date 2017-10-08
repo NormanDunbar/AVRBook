@@ -68,7 +68,9 @@
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
-\input{titlePage.tex}
+\frontmatter	% Must be present if using an index and want to have correct indexing.
+				% if mainmatter is used. 
+\input{titlePage}
 
 %----------------------------------------------------------------------------------------
 %	COPYRIGHT PAGE
@@ -111,12 +113,18 @@
 \pagestyle{fancy} % Print headers again
 
 %----------------------------------------------------------------------------------------
-%Here come the contents of the book...
+% Here come the contents of the book...
 %----------------------------------------------------------------------------------------
+\input{includeFrontmatter}
 
+\mainmatter
 \input{includeContents}
 
-
+%----------------------------------------------------------------------------------------
+% Here come the appendices etc at the back.
+%----------------------------------------------------------------------------------------
+\backmatter
+\input{includeBackmatter}
 %----------------------------------------------------------------------------------------
 %	NDunbar: BIBLIOGRAPHY - NOT REQUIRED
 %----------------------------------------------------------------------------------------
@@ -137,6 +145,7 @@
 %
 % Compile main file with pdfLaTeX.
 % Compile main file with makeIndex -s StyleInd.ist.
+% Compile main file with pdfLaTeX again.
 % Compile main file with pdfLaTeX again.
 %
 %----------------------------------------------------------------------------------------

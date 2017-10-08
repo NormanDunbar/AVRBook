@@ -21,7 +21,7 @@ This book deals, in the main, with the middle level of abstraction, the \inline{
 
 Just remember, \inline{delay()} is \emph{not} your best friend when programming the  \indexasis{Arduino} or the AVR. Hopefully, you will find this out later when you read on.
 
-\subsection{Hardware Necessary}\label{hardware-necessary}
+\section*{Hardware Necessary}\label{hardware-necessary}
 
 It is assumed that you have some form of \indexasis{Arduino}. This is the test bed upon which we will operate. I'm using a Nano, an Uno, a Duemilanove and, maybe, a Mega. I also have a couple that I build myself on breadboards, strip-board and I'm designing my own PCB for future projects. Most of the time, however, I'll be running my code on the Nano - it's small enough to sit on my desktop and not get too much in the way when I'm typing!
 
@@ -41,7 +41,7 @@ Using a programmer allows you to save the 2Kb of Flash Memory that an  \indexasi
 
 A small collection of breadboards, resistors, LEDs (there's always room for flashing lights!), switches, transistors, diodes etc - as and when necessary, I'll show a Bill of Materials for any circuits that we build. There won't be much, if any, specialised components necessary - I'm not that clever! Wires too, I suppose.
 
-\subsection{Optional Stuff}\label{optional-stuff}
+\section*{Optional Stuff}\label{optional-stuff}
 
 If you don't have a spare  \indexasis{Arduino} lying around, then you might want an \indexasis{ISP Programmer}. You don't \emph{need} one as the standard  \indexasis{Arduino} method of programming over the USB cable will still work.
 
@@ -53,11 +53,11 @@ There's nothing to stop you getting hold of a cheap \indexasis{Arduino} clone fr
 
 I started with an \indexasis{Arduino} Duemilanove which was bought for me as a gift, but I built my own Shrimp Kit just for the fun of it. I've built a few more since then!
 
-\section{The Workflow}\label{the-workflow}  
+\section*{The Workflow}\label{the-workflow}  
 
 In the \nameref{part-platformio} part of this book, we will start by obtaining, installing and setting up the \indexasis{PlatformIO} software. This is what we will be using to compile our code, and to program our devices. 
 
-Using this application is free (or, you can make a donation if you like it a lot) and replaces the \indexasis{Arduino} IDE with a new system that allows you to use your favourite editor, or a number of freely available, or commercial, IDEs, or stand-alone in a command shell.
+Using this application is free (or, you can make a donation if you like it a lot) and replaces the \indexasis{Arduino} IDE with a new system that allows you to use your favourite editor, or a number of freely available, or commercial, IDEs, or stand-alone in a command shell. In addition, it comes with built in support for numerous different micro-controllers, not just the standard Arduino types, and this includes a number of AVR micro-controllers which the \indexasis{Arduino IDE} doesn't support, unless you install various drivers etc.
 
 There are two parts to \indexasis{PlatformIO} - the IDE and the shell commands. We will be taking a look at both.
 

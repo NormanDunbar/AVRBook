@@ -15,7 +15,6 @@
 #
 
 pdflatex -output-directory=AuxFiles AVRBook.tex
-pdflatex -output-directory=AuxFiles AVRBook.tex
 makeindex -s StyleInd.ist AuxFiles/AVRBook.idx
 pdflatex -output-directory=AuxFiles AVRBook.tex
 pdflatex -output-directory=AuxFiles AVRBook.tex
